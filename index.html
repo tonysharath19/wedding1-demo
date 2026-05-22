@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#2a1434" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="format-detection" content="telephone=no" />
   <title>Veena & Praveen — The Grand Wedding</title>
@@ -501,7 +501,7 @@
 
   <div id="scroll-content">
 
-    <section class="hero-dark hero-landing-bg min-svh flex items-center justify-center text-center px-4 md:px-10 relative overflow-hidden">
+    <section class="hero-dark hero-gradient hero-landing-bg min-svh flex items-center justify-center text-center px-4 md:px-10 relative overflow-hidden">
       <div id="heroBG" class="absolute inset-0 pointer-events-none">
       </div>
 
@@ -550,11 +550,7 @@
 
           <canvas id="scratchCanvas" class="absolute inset-0 rounded-3xl"></canvas>
           <div class="scratch-reveal-layer" id="scratchOverlay" style="pointer-events:none">
-            <div class="w-16 h-16 rounded-full bg-white/15 flex items-center justify-center border border-white/25 mb-3">
-              <span class="text-white/90 text-xs tracking-[0.35em] font-semibold">REVEAL</span>
-            </div>
-            <p class="text-white tracking-[0.25em] text-sm font-semibold uppercase">Scratch To Reveal</p>
-            <p class="text-white/70 tracking-[0.35em] text-[10px] uppercase font-semibold pt-2">Drag your finger / mouse</p>
+            <p class="text-white/90 tracking-[0.2em] text-xs font-bold uppercase">Scratch To Reveal Dates</p>
           </div>
         </div>
       </div>
@@ -837,6 +833,14 @@
     const scratchCard = document.getElementById('scratchCard');
     const scratchOverlay = document.getElementById('scratchOverlay');
     const scratchCanvas = document.getElementById('scratchCanvas');
+    let isDown = false;
+    let lastPoint = null;
+    let scratched = false;
+
+    const onUp = () => { isDown = false; lastPoint = null; if(window.revealIfEnough) window.revealIfEnough(); };
+    // Bind window listeners once to avoid duplication
+    window.addEventListener('mouseup', onUp);
+    window.addEventListener('touchend', onUp);
 
     function setupScratch() {
       if (!scratchCard || !scratchOverlay || !scratchCanvas) return;
@@ -856,13 +860,17 @@
       ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
       ctx.globalCompositeOperation = 'source-over';
 
-      // Solid Deep Darkest Maroon scratch layer
-      ctx.fillStyle = '#2d0a0a';
+      scratchCanvas.style.touchAction = 'none';
+
+      // Deep Maroon scratch layer
+      ctx.fillStyle = '#4a0e0e';
       ctx.fillRect(0, 0, width, height);
 
-      for (let i = 0; i < 18; i++) {
+      // Subtle luxury texture
+      ctx.fillStyle = '#3a0b0b';
+      for (let i = 0; i < 80; i++) {
         ctx.beginPath();
-        ctx.arc((width * i) / 18, (height * ((i % 5) + 1)) / 6, 30, 0, Math.PI * 2);
+        ctx.arc(Math.random() * width, Math.random() * height, 1.2, 0, Math.PI * 2);
         ctx.fill();
       }
 
@@ -870,9 +878,7 @@
       ctx.lineJoin = 'round';
       ctx.lineCap = 'round';
       ctx.lineWidth = 45;
-
-      let isDown = false;
-      let scratched = false;
+      ctx.strokeStyle = '#000'; // Value doesn't matter for destination-out, but must be set
 
       function getPoint(e) {
         const r = scratchCanvas.getBoundingClientRect();
@@ -881,9 +887,7 @@
         return { x: clientX - r.left, y: clientY - r.top };
       }
 
-      let lastPoint = null;
-      function scratchAt(x, y) {
-        scratched = true;
+      window.scratchAt = function(x, y) {
         if (lastPoint) {
           ctx.beginPath();
           ctx.moveTo(lastPoint.x, lastPoint.y);
@@ -891,13 +895,13 @@
           ctx.stroke();
         } else { // Draw a circle for the very first point
           ctx.beginPath();
-          ctx.arc(x, y, ctx.lineWidth / 2, 0, Math.PI * 2);
+          ctx.arc(x, y, 22.5, 0, Math.PI * 2);
           ctx.fill();
         }
         lastPoint = { x, y };
-      }
+      };
 
-      function revealIfEnough() {
+      window.revealIfEnough = function() {
         if (!scratched) return;
         const sample = ctx.getImageData(0, 0, width, height).data;
         let transparent = 0;
@@ -910,21 +914,30 @@
           gsap.to('#scratchSurface', { background: 'transparent', boxShadow: 'none', duration: 0.8 });
           scratchCanvas.style.pointerEvents = 'none';
         }
-      }
+      };
 
       scratchCanvas.style.pointerEvents = 'auto';
 
-      const onDown = (e) => { isDown = true; lastPoint = getPoint(e); scratchAt(lastPoint.x, lastPoint.y); e.preventDefault(); };
-      const onMove = (e) => { if (!isDown) return; const p = getPoint(e); scratchAt(p.x, p.y); e.preventDefault(); };
-      const onUp = () => { isDown = false; lastPoint = null; revealIfEnough(); };
+      const onDown = (e) => { 
+        isDown = true; 
+        scratched = true;
+        const p = getPoint(e);
+        lastPoint = p;
+        window.scratchAt(p.x, p.y); 
+        e.preventDefault(); 
+      };
+      const onMove = (e) => { 
+        if (!isDown) return; 
+        const p = getPoint(e); 
+        window.scratchAt(p.x, p.y); 
+        e.preventDefault(); 
+      };
 
       scratchCanvas.addEventListener('mousedown', onDown);
       scratchCanvas.addEventListener('mousemove', onMove);
-      window.addEventListener('mouseup', onUp);
 
       scratchCanvas.addEventListener('touchstart', onDown, { passive: false });
       scratchCanvas.addEventListener('touchmove', onMove, { passive: false });
-      window.addEventListener('touchend', onUp);
 
       // quick fallback for keyboard / click
       scratchCard.addEventListener('dblclick', () => {
