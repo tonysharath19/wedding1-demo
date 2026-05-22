@@ -217,31 +217,31 @@
 
     /* Hero landing: responsive image background (desktop/mobile) */
     .hero-landing-bg {
-      background: url('MEDIA/IMAGES/DESKTOP/HERO-D.png') center / cover no-repeat;
+      background: url('media/images/desktop/HERO-D.png') center / cover no-repeat;
     }
     @media (max-width: 767px) {
       .hero-landing-bg {
-        background: url('media/images/MOBILE/HERO-M.png') center / cover no-repeat;
+        background: url('media/images/mobile/HERO-M.png') center / cover no-repeat;
       }
     }
 
     /* Timeline landing: responsive image background (desktop/mobile) */
     .timeline-landing-bg {
-      background: url('media/images/DESKTOP/TIMELINE-D.png') center / cover no-repeat;
+      background: url('media/images/desktop/TIMELINE-D.png') center / cover no-repeat;
     }
     @media (max-width: 767px) {
       .timeline-landing-bg {
-        background: url('media/images/MOBILE/TIMELINE-M.png') center / cover no-repeat;
+        background: url('media/images/mobile/TIMELINE-M.png') center / cover no-repeat;
       }
     }
 
     /* Rituals landing: responsive image background */
     .rituals-landing-bg {
-      background: url('media/images/DESKTOP/5day-D.png') center / cover no-repeat;
+      background: url('media/images/desktop/5day-D.png') center / cover no-repeat;
     }
     @media (max-width: 767px) {
       .rituals-landing-bg {
-        background: url('media/images/MOBILE/5day-M.png') center / cover no-repeat;
+        background: url('media/images/mobile/5day-M.png') center / cover no-repeat;
       }
     }
 
@@ -888,6 +888,7 @@
       }
 
       window.scratchAt = function(x, y) {
+        scratched = true;
         if (lastPoint) {
           ctx.beginPath();
           ctx.moveTo(lastPoint.x, lastPoint.y);
@@ -903,13 +904,16 @@
 
       window.revealIfEnough = function() {
         if (!scratched) return;
-        const sample = ctx.getImageData(0, 0, width, height).data;
+        // Physical dimensions must be used for getImageData to work on all screens
+        const physWidth = scratchCanvas.width;
+        const physHeight = scratchCanvas.height;
+        const sample = ctx.getImageData(0, 0, physWidth, physHeight).data;
         let transparent = 0;
-        for (let i = 3; i < sample.length; i += 16) {
+        for (let i = 3; i < sample.length; i += 32) {
           if (sample[i] === 0) transparent++;
         }
-        const ratio = transparent / (sample.length / 16);
-        if (ratio > 0.40) {
+        const ratio = transparent / (sample.length / 32);
+        if (ratio > 0.35) {
           gsap.to([scratchOverlay, scratchCanvas], { opacity: 0, duration: 0.6, ease: 'power2.out' });
           gsap.to('#scratchSurface', { background: 'transparent', boxShadow: 'none', duration: 0.8 });
           scratchCanvas.style.pointerEvents = 'none';
@@ -920,9 +924,7 @@
 
       const onDown = (e) => { 
         isDown = true; 
-        scratched = true;
         const p = getPoint(e);
-        lastPoint = p;
         window.scratchAt(p.x, p.y); 
         e.preventDefault(); 
       };
