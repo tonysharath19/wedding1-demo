@@ -1,0 +1,978 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2a1434" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>Veena & Praveen — The Grand Wedding</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.16/dist/lenis.min.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #201216;
+      --ink-soft: rgba(32, 18, 22, 0.72);
+
+      --rose: #d85b7e;
+      --mauve: #8b5cf6;
+      --emerald: #2bb673;
+      --peach: #ffd1a6;
+
+      --pastel-1: #ffb2c3;
+      --pastel-2: #f0b6ff;
+      --pastel-3: #8ff1b2;
+      --pastel-4: #ffd1a6;
+
+      --royal-1: #18071f;
+      --royal-2: #2b0c35;
+      --royal-3: #4b1b52;
+      --gold: #f3c88b;
+      --gold-soft: rgba(243, 200, 139, 0.65);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      background: var(--royal-1);
+      color: var(--ink);
+      -webkit-text-size-adjust: 100%;
+      text-rendering: geometricPrecision;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .calligraphy { font-family: 'Great Vibes', cursive; }
+    .seal-monogram { font-family: 'Cinzel Decorative', serif; letter-spacing: 0.08em; }
+    .hero-name { font-family: 'Cinzel Decorative', serif; }
+
+    .embossed-name {
+      text-shadow:
+        0 2px 0 rgba(255,255,255,0.55),
+        0 10px 30px rgba(18, 10, 14, 0.28);
+      -webkit-text-stroke: 0.5px rgba(255,255,255,0.35);
+    }
+
+    /* Grand Vibrant Pastel Color Canvas Overlays */
+    .hero-gradient {
+      background: radial-gradient(1200px 900px at 20% 10%, rgba(255, 178, 195, 0.95) 0%, rgba(255, 178, 195, 0) 55%),
+                  radial-gradient(1200px 900px at 80% 20%, rgba(240, 182, 255, 0.9) 0%, rgba(240, 182, 255, 0) 58%),
+                  radial-gradient(1100px 800px at 60% 90%, rgba(143, 241, 178, 0.9) 0%, rgba(143, 241, 178, 0) 55%),
+                  linear-gradient(135deg, var(--pastel-1) 0%, #e9b3ff 32%, #9af2bb 68%, var(--pastel-4) 100%);
+      background-size: 400% 400%;
+    }
+    .palette-1 { background: linear-gradient(180deg, #ffb2c3 0%, #f8a9bd 100%); } 
+    .palette-2 { background: linear-gradient(180deg, #f2b0ff 0%, #ffb2c3 100%); } 
+    .palette-3 { background: linear-gradient(180deg, #ffd1a6 0%, #f0b6ff 100%); } 
+    .palette-4 { background: linear-gradient(180deg, #cbb7ff 0%, #97f1bb 100%); } 
+    .palette-5 { background: linear-gradient(180deg, #97f1bb 0%, #ffb2c3 100%); } 
+
+    .section-royal {
+      background: radial-gradient(900px 700px at 20% 15%, rgba(243, 200, 139, 0.18) 0%, rgba(243, 200, 139, 0) 60%),
+                  radial-gradient(900px 700px at 80% 10%, rgba(139, 92, 246, 0.22) 0%, rgba(139, 92, 246, 0) 58%),
+                  linear-gradient(180deg, var(--royal-1) 0%, var(--royal-2) 55%, var(--royal-3) 100%);
+      color: #fff;
+      background-size: 200% 200%;
+    }
+
+    /* Premium Heavy Translucent Glass */
+    .glass-slab {
+      background: rgba(255, 255, 255, 0.38);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      box-shadow: 0 30px 70px rgba(138, 79, 102, 0.18);
+    }
+
+    .glass-royal {
+      background: rgba(12, 6, 16, 0.28);
+      backdrop-filter: blur(26px);
+      -webkit-backdrop-filter: blur(26px);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.35);
+    }
+
+    .reveal-mask {
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Smooth Interactive Buttons */
+    .luxury-btn {
+      padding: 18px 45px;
+      border-radius: 999px;
+      border: 1px solid rgba(138, 79, 102, 0.25);
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #4a2834;
+    }
+
+    .luxury-btn:hover {
+      transform: translateY(-4px);
+      background: #ffffff;
+      box-shadow: 0 20px 40px rgba(138, 79, 102, 0.2);
+    }
+
+    /* Preloader Architectural Elements */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(1200px 900px at 20% 15%, rgba(139, 92, 246, 0.28) 0%, rgba(139, 92, 246, 0) 55%),
+                  radial-gradient(1200px 900px at 80% 10%, rgba(255, 77, 109, 0.20) 0%, rgba(255, 77, 109, 0) 60%),
+                  linear-gradient(135deg, #07030d 0%, #12031c 45%, #1a0430 100%);
+    }
+
+    #preloader::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(900px 700px at 50% 45%, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #preloader::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(closest-side, rgba(0,0,0,0) 62%, rgba(0,0,0,0.55) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .loader-bg-half {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      background: radial-gradient(900px 700px at 20% 20%, rgba(243, 200, 139, 0.18) 0%, rgba(243, 200, 139, 0) 60%),
+                  radial-gradient(900px 700px at 80% 10%, rgba(139, 92, 246, 0.22) 0%, rgba(139, 92, 246, 0) 58%),
+                  linear-gradient(135deg, #0b0413 0%, #1a0430 35%, #3b0a5d 70%, #14041f 100%);
+      z-index: 1;
+    }
+    .loader-left { left: 0; border-right: none; }
+    .loader-right { right: 0; }
+
+    .royal-frame {
+      position: relative;
+    }
+    .royal-frame::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border-radius: 48px;
+      pointer-events: none;
+    }
+    .royal-frame::after {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border-radius: 56px;
+      pointer-events: none;
+      mask: radial-gradient(closest-side, transparent 70%, #000 100%);
+    }
+
+    /* Remove frame boxes on the seal (preloader) page */
+    #preloader .royal-frame::before,
+    #preloader .royal-frame::after {
+      display: none;
+    }
+
+    .hero-dark {
+      background:
+        radial-gradient(1100px 700px at 15% 20%, rgba(139, 92, 246, 0.35) 0%, rgba(139, 92, 246, 0) 60%),
+        radial-gradient(1200px 800px at 85% 10%, rgba(255, 77, 109, 0.22) 0%, rgba(255, 77, 109, 0) 58%),
+        radial-gradient(1000px 800px at 55% 95%, rgba(43, 182, 115, 0.18) 0%, rgba(43, 182, 115, 0) 60%),
+        linear-gradient(180deg, #0b0613 0%, #13051c 50%, #1f0730 100%);
+      color: #fff;
+    }
+
+    /* Hero landing: responsive image background (desktop/mobile) */
+    .hero-landing-bg {
+      background: url('media/images/DESKTOP/HERO-D.png') center / cover no-repeat;
+    }
+    @media (max-width: 767px) {
+      .hero-landing-bg {
+        background: url('media/images/MOBILE/HERO-M.png') center / cover no-repeat;
+      }
+    }
+
+    /* Timeline landing: responsive image background (desktop/mobile) */
+    .timeline-landing-bg {
+      background: url('media/images/DESKTOP/TIMELINE-D.png') center / cover no-repeat;
+    }
+    @media (max-width: 767px) {
+      .timeline-landing-bg {
+        background: url('media/images/MOBILE/TIMELINE-M.png') center / cover no-repeat;
+      }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .scratch-card-surface {
+      background: transparent;
+      opacity: 1;
+      transition: background 0.8s ease, box-shadow 0.8s ease;
+      border-radius: 32px;
+      font-family: 'Cinzel Decorative', serif;
+    }
+    
+    .scratch-card-surface .reveal-text-item, 
+    .scratch-card-surface span, 
+    .scratch-card-surface p {
+      color: var(--gold) !important;
+      font-weight: 700 !important;
+      text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      left: 50%;
+      bottom: 26px;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 20;
+      user-select: none;
+    }
+    .scroll-indicator .mouse {
+      width: 26px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(243, 200, 139, 0.45);
+      background: rgba(255,255,255,0.06);
+      position: relative;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    }
+    .scroll-indicator .mouse::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 10px;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(243, 200, 139, 0.9);
+      animation: scrollDot 1.4s ease-in-out infinite;
+    }
+    @keyframes scrollDot {
+      0% { opacity: 0; transform: translate(-50%, -2px); }
+      25% { opacity: 1; }
+      100% { opacity: 0; transform: translate(-50%, 14px); }
+    }
+
+    .image-frame {
+      border-radius: 48px;
+      border: 1px solid rgba(243, 200, 139, 0.28);
+      box-shadow: 0 40px 120px rgba(0,0,0,0.35);
+      overflow: hidden;
+    }
+
+    .gallery-full {
+      position: relative;
+      min-height: 100svh;
+    }
+    .gallery-full img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.08) contrast(1.04);
+    }
+
+    .wax-seal {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(90px 90px at 30% 30%, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0) 55%),
+                  linear-gradient(135deg, #ff4d6d, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 25px 50px rgba(255, 123, 144, 0.45);
+      border: 2px solid rgba(255,255,255,0.7);
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .wax-seal::after {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      border-radius: 999px;
+      border: 1px dashed rgba(255,255,255,0.45);
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+
+    /* Preloader: no dashed oval lines */
+    #preloader .wax-seal::after {
+      display: none;
+    }
+
+    /* Interactive Reveal Card Container Styles */
+    .scratch-container {
+      position: relative;
+      width: 280px;
+      height: 180px;
+      margin: 0 auto;
+      cursor: pointer;
+    }
+    @media (min-width: 768px) {
+      .scratch-container {
+        width: 320px;
+        height: 200px;
+      }
+    }
+
+    .scratch-reveal-layer {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #ff4d6d, #8b5cf6);
+      border-radius: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s ease;
+    }
+
+    /* iOS/Apple viewport quirks */
+    .min-svh { min-height: 100svh; }
+    @supports (-webkit-touch-callout: none) {
+      .hero-gradient { min-height: 100svh; }
+    }
+
+    /* Ritual panels */
+    .ritual-panel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 56px;
+      border: 1px solid rgba(255,255,255,0.55);
+      box-shadow: 0 40px 120px rgba(24, 9, 18, 0.22);
+    }
+    .ritual-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(900px 500px at 10% 15%, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 55%),
+        radial-gradient(900px 500px at 90% 80%, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0) 60%);
+      pointer-events: none;
+    }
+    .ritual-media {
+      min-height: 240px;
+      border-radius: 44px;
+      background:
+        radial-gradient(500px 300px at 30% 30%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 60%),
+        linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
+      border: 1px dashed rgba(255,255,255,0.45);
+    }
+
+    /* Gallery panels */
+    .gallery-panel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 56px;
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: 0 40px 120px rgba(24, 9, 18, 0.22);
+      background: rgba(255,255,255,0.14);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    .gallery-panel img { width: 100%; height: 100%; object-fit: cover; }
+    @media (orientation: landscape) and (min-width: 768px) {
+      .gallery-panel { min-height: 88vh; }
+    }
+    @media (max-width: 767px) {
+      .gallery-panel { border-radius: 36px; }
+    }
+
+    /* Map widget */
+    .map-shell {
+      position: relative;
+      overflow: hidden;
+      border-radius: 44px;
+      border: 1px solid rgba(255,255,255,0.55);
+      box-shadow: 0 40px 120px rgba(24, 9, 18, 0.25);
+    }
+    .map-shell iframe { width: 100%; height: 420px; border: 0; display: block; }
+    @media (max-width: 767px) { .map-shell iframe { height: 360px; } }
+
+    /* Footer icons */
+    .contact-icon {
+      width: 46px;
+      height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(243, 200, 139, 0.28);
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), background 0.4s ease, box-shadow 0.4s ease;
+    }
+    .contact-icon:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.18);
+      box-shadow: 0 18px 42px rgba(0,0,0,0.35);
+    }
+
+    /* Glass Slide Effect: Remove gaps between sections */
+    section {
+      margin-top: -1px;
+      position: relative;
+      z-index: 5;
+      backdrop-filter: blur(10px);
+      max-width: 100vw;
+      border: none !important;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="preloader">
+    <div class="loader-bg-half loader-left"></div>
+    <div class="loader-bg-half loader-right"></div>
+    
+
+
+    <div class="absolute z-10 text-center flex flex-col items-center justify-center royal-frame">
+      <div id="sealButton" class="wax-seal group mb-8">
+        <span class="seal-monogram text-4xl text-white select-none pointer-events-none transform group-hover:scale-110 transition-transform duration-500">P&nbsp;&amp;&nbsp;V</span>
+      </div>
+      <div id="loaderText" class="px-6 relative z-10 max-w-[92vw]">
+        <p class="tracking-[0.35em] md:tracking-[0.45em] text-[10px] md:text-xs uppercase text-white/85 mb-2 font-semibold">Tap The Seal To Open Invitation</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="scroll-content">
+
+    <section class="hero-dark hero-landing-bg min-svh flex items-center justify-center text-center px-4 md:px-10 relative overflow-hidden">
+      <div id="heroBG" class="absolute inset-0 pointer-events-none">
+      </div>
+
+      <div class="relative z-10 max-w-6xl mx-auto space-y-6 w-full">
+        <div class="reveal-mask">
+          <p class="hero-reveal-line tracking-[0.55em] uppercase text-[10px] md:text-sm text-white/80 font-semibold">Together With Their Families</p>
+        </div>
+        
+        <div class="py-4 space-y-4">
+          <div class="reveal-mask">
+            <h1 class="hero-reveal-line hero-name embossed-name text-[clamp(2.8rem,8.6vw,9.2rem)] text-white leading-[0.95] tracking-[0.05em] px-2">Praveen Kumar P</h1>
+          </div>
+          <div class="reveal-mask">
+            <h2 class="hero-reveal-line text-4xl md:text-5xl font-light text-white/70">&</h2>
+          </div>
+          <div class="reveal-mask">
+            <h1 class="hero-reveal-line hero-name embossed-name text-[clamp(2.8rem,8.6vw,9.2rem)] text-[color:var(--gold)] leading-[0.95] tracking-[0.05em] px-2">Veena B</h1>
+          </div>
+        </div>
+
+        <div class="reveal-mask pt-6">
+          <p class="hero-reveal-line text-[11px] md:text-[12px] tracking-[0.55em] text-white/75 uppercase font-semibold">Zareqia Grand Pavilion</p>
+        </div>
+      </div>
+
+      <div class="scroll-indicator">
+        <div class="mouse"></div>
+        <div class="text-[10px] tracking-[0.45em] uppercase text-white/60 font-semibold">Scroll</div>
+      </div>
+    </section>
+
+    <section class="section-royal timeline-landing-bg min-svh px-6 md:px-16 py-24 md:py-28 flex items-center text-center relative overflow-hidden royal-frame">
+      <div class="max-w-3xl mx-auto space-y-12 relative z-10">
+        <div class="space-y-3">
+          <span class="calligraphy text-6xl md:text-7xl text-[color:var(--gold)] block">The Sacred Timeline</span>
+          <h2 class="text-4xl md:text-6xl font-light tracking-wide text-white">Unveil The Date</h2>
+          <p class="text-white/70 text-sm md:text-base tracking-[0.2em] uppercase">A royal invitation awaits</p>
+        </div>
+
+        <div class="scratch-container" id="scratchCard">
+          <div id="scratchSurface" class="scratch-card-surface absolute inset-0 flex flex-col items-center justify-center space-y-1 p-6">
+            <div class="reveal-text-item text-3xl md:text-4xl uppercase tracking-widest">June</div>
+            <div class="reveal-text-item text-3xl md:text-4xl uppercase tracking-widest">12 - 16</div>
+            <div class="reveal-text-item text-3xl md:text-4xl uppercase tracking-widest">2026</div>
+          </div>
+
+          <canvas id="scratchCanvas" class="absolute inset-0 rounded-3xl"></canvas>
+          <div class="scratch-reveal-layer" id="scratchOverlay" style="pointer-events:none">
+            <div class="w-16 h-16 rounded-full bg-white/15 flex items-center justify-center border border-white/25 mb-3">
+              <span class="text-white/90 text-xs tracking-[0.35em] font-semibold">REVEAL</span>
+            </div>
+            <p class="text-white tracking-[0.25em] text-sm font-semibold uppercase">Scratch To Reveal</p>
+            <p class="text-white/70 tracking-[0.35em] text-[10px] uppercase font-semibold pt-2">Drag your finger / mouse</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero-dark min-svh px-6 md:px-16 py-24 flex items-center relative overflow-hidden royal-frame">
+      <div class="max-w-6xl mx-auto w-full text-center space-y-5 relative z-10">
+        <span class="calligraphy text-7xl md:text-8xl text-[color:var(--gold)] block">The 5‑Day Rituals</span>
+        <h2 class="text-4xl md:text-6xl font-light tracking-wide text-white">A Royal Celebration</h2>
+        <p class="text-[11px] md:text-xs tracking-[0.45em] uppercase text-white/70 font-semibold">Scroll through each day</p>
+      </div>
+    </section>
+
+    <section class="hero-dark min-svh px-6 md:px-16 py-24 flex items-center relative overflow-hidden royal-frame">
+      <div class="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+        <div class="space-y-6">
+          <div class="text-[11px] tracking-[0.5em] uppercase text-white/70 font-semibold">Day 01 • Oct 13 • 5:00 PM</div>
+          <h3 class="text-5xl md:text-7xl font-light text-white tracking-wide">Mehendi Ceremony</h3>
+          <p class="text-white/80 text-base md:text-lg font-light leading-relaxed">Emerald tones, intricate henna artistry, and a first toast to forever.</p>
+        </div>
+        <div class="image-frame">
+          <img data-reveal="media" src="https://images.unsplash.com/photo-1529636798458-92182e662485?q=80&w=1800&auto=format&fit=crop" alt="Mehendi Ceremony" class="w-full h-[44vh] md:h-[72vh] object-cover">
+        </div>
+      </div>
+    </section>
+
+    <section class="hero-dark min-svh px-6 md:px-16 py-24 flex items-center relative overflow-hidden royal-frame">
+      <div class="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+        <div class="image-frame order-2 md:order-1">
+          <img data-reveal="media" src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1800&auto=format&fit=crop" alt="Haldi Ritual" class="w-full h-[44vh] md:h-[72vh] object-cover">
+        </div>
+        <div class="space-y-6 order-1 md:order-2">
+          <div class="text-[11px] tracking-[0.5em] uppercase text-white/70 font-semibold">Day 02 • Oct 14 • 10:00 AM</div>
+          <h3 class="text-5xl md:text-7xl font-light text-white tracking-wide">The Haldi Ritual</h3>
+          <p class="text-white/80 text-base md:text-lg font-light leading-relaxed">Golden blessings, laughter, and the warmest light of tradition.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero-dark min-svh px-6 md:px-16 py-24 flex items-center relative overflow-hidden royal-frame">
+      <div class="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+        <div class="space-y-6">
+          <div class="text-[11px] tracking-[0.5em] uppercase text-white/70 font-semibold">Day 03 • Oct 15 • 7:00 PM</div>
+          <h3 class="text-5xl md:text-7xl font-light text-white tracking-wide">Sangeet Gala Night</h3>
+          <p class="text-white/80 text-base md:text-lg font-light leading-relaxed">A night of rhythm, shimmer, and stories told in dance.</p>
+        </div>
+        <div class="image-frame">
+          <img data-reveal="media" src="https://images.unsplash.com/photo-1525258946800-98cfd641d0de?q=80&w=1800&auto=format&fit=crop" alt="Sangeet Night" class="w-full h-[44vh] md:h-[72vh] object-cover">
+        </div>
+      </div>
+    </section>
+
+    <section class="hero-dark min-svh px-6 md:px-16 py-24 flex items-center relative overflow-hidden royal-frame">
+      <div class="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+        <div class="image-frame order-2 md:order-1">
+          <img data-reveal="media" src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=1800&auto=format&fit=crop" alt="The Grand Wedding" class="w-full h-[44vh] md:h-[72vh] object-cover">
+        </div>
+        <div class="space-y-6 order-1 md:order-2">
+          <div class="text-[11px] tracking-[0.5em] uppercase text-white/70 font-semibold">Day 04 • Oct 16 • 4:30 PM</div>
+          <h3 class="text-5xl md:text-7xl font-light text-white tracking-wide">The Grand Wedding</h3>
+          <p class="text-white/80 text-base md:text-lg font-light leading-relaxed">Vows beneath a luminous mandap—pure, sacred, unforgettable.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero-dark min-svh px-6 md:px-16 py-24 flex items-center relative overflow-hidden royal-frame">
+      <div class="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+        <div class="space-y-6">
+          <div class="text-[11px] tracking-[0.5em] uppercase text-white/70 font-semibold">Day 05 • Oct 17 • 8:00 PM</div>
+          <h3 class="text-5xl md:text-7xl font-light text-white tracking-wide">Royal Reception</h3>
+          <p class="text-white/80 text-base md:text-lg font-light leading-relaxed">A luxe finale—music, toasts, and a forever that begins tonight.</p>
+        </div>
+        <div class="image-frame">
+          <img data-reveal="media" src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=1800&auto=format&fit=crop" alt="Royal Reception" class="w-full h-[44vh] md:h-[72vh] object-cover">
+        </div>
+      </div>
+    </section>
+
+    <section class="px-6 md:px-16 py-28 text-center relative overflow-hidden royal-frame" style="background: linear-gradient(180deg, #ff4d6d 0%, #ff7aa2 45%, #ffd1e0 100%);">
+      <div class="max-w-5xl mx-auto space-y-4 relative z-10">
+        <span class="calligraphy text-7xl md:text-8xl text-white drop-shadow-[0_18px_60px_rgba(0,0,0,0.35)] block">Moments Captured</span>
+        <h2 class="text-4xl md:text-6xl font-light text-white/95 tracking-wide">Our Gallery</h2>
+      </div>
+    </section>
+
+    <section class="gallery-full royal-frame" id="galleryCanvas">
+      <img data-reveal="media" src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=2400&auto=format&fit=crop" alt="Gallery image 1">
+    </section>
+    <section class="gallery-full royal-frame">
+      <img data-reveal="media" src="https://images.unsplash.com/photo-1525258946800-98cfd641d0de?q=80&w=2400&auto=format&fit=crop" alt="Gallery image 2">
+    </section>
+    <section class="gallery-full royal-frame">
+      <img data-reveal="media" src="https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=2400&auto=format&fit=crop" alt="Gallery image 3">
+    </section>
+    <section class="gallery-full royal-frame">
+      <img data-reveal="media" src="https://images.unsplash.com/photo-1529636798458-92182e662485?q=80&w=2400&auto=format&fit=crop" alt="Gallery image 4">
+    </section>
+    <section class="gallery-full royal-frame">
+      <img data-reveal="media" src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?q=80&w=2400&auto=format&fit=crop" alt="Gallery image 5">
+    </section>
+
+    <section class="palette-4 py-32 px-6 md:px-16 overflow-hidden">
+      <div class="max-w-5xl mx-auto text-center space-y-10">
+        <div class="space-y-3">
+          <span class="calligraphy text-6xl md:text-7xl text-emerald-900">The Destination</span>
+          <p class="text-[11px] md:text-xs tracking-[0.35em] uppercase text-stone-700 font-semibold">Tap to open in Google Maps</p>
+        </div>
+
+        <div class="map-shell glass-slab max-w-4xl mx-auto">
+          <iframe
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=Zareqia%20Grand%20Pavilion%2C%201042%20Orchid%20Pastel%20Boulevard%2C%20Serenity%20Valley%2C%20India&output=embed"
+            title="Google Maps - Destination"></iframe>
+          <div class="absolute inset-0 flex items-end justify-center p-6 pointer-events-none">
+            <a class="luxury-btn pointer-events-auto inline-flex items-center gap-3 !bg-stone-900/90 !text-white hover:!bg-stone-900"
+               target="_blank"
+               rel="noopener"
+               href="https://www.google.com/maps/search/?api=1&query=Zareqia%20Grand%20Pavilion%2C%201042%20Orchid%20Pastel%20Boulevard%2C%20Serenity%20Valley%2C%20India">
+              Open In Maps
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="palette-5 py-32 px-6 md:px-16 overflow-hidden">
+      <div class="max-w-2xl mx-auto text-center space-y-10">
+        <div class="space-y-3">
+          <span class="calligraphy text-6xl md:text-7xl text-rose-800">RSVP</span>
+          <h2 class="text-4xl md:text-6xl font-light text-stone-900 tracking-wide">Share Your Presence</h2>
+          <p class="text-[11px] md:text-xs tracking-[0.35em] uppercase text-stone-700 font-semibold">A quick note helps us welcome you perfectly</p>
+        </div>
+
+        <form action="https://formspree.io/f/yourFormID" method="POST" class="glass-slab rounded-[44px] p-8 md:p-12 space-y-6 text-left">
+          <input type="hidden" name="_subject" value="Wedding RSVP — Veena & Praveen" />
+
+          <div class="space-y-2">
+            <label class="text-xs uppercase tracking-widest text-stone-600 font-semibold ml-4">Full Name</label>
+            <input name="name" type="text" placeholder="Your Name" required class="w-full bg-white/70 border border-stone-200 p-5 rounded-full outline-none focus:border-rose-400 focus:bg-white transition-all duration-300 text-stone-900">
+          </div>
+          
+          <div class="space-y-2">
+            <label class="text-xs uppercase tracking-widest text-stone-600 font-semibold ml-4">Phone Number</label>
+            <input name="phone" type="tel" placeholder="Phone Number" required class="w-full bg-white/70 border border-stone-200 p-5 rounded-full outline-none focus:border-rose-400 focus:bg-white transition-all duration-300 text-stone-900">
+          </div>
+
+          <div class="space-y-2">
+            <label class="text-xs uppercase tracking-widest text-stone-600 font-semibold ml-4">Attendance Status</label>
+            <select name="attendance" class="w-full bg-white/70 border border-stone-200 p-5 px-6 rounded-full outline-none focus:border-rose-400 focus:bg-white transition-all duration-300 text-stone-800 appearance-none">
+              <option value="Joyfully Accept">Joyfully Accept</option>
+              <option value="Regretfully Decline">Regretfully Decline</option>
+            </select>
+          </div>
+
+          <div class="space-y-2">
+            <label class="text-xs uppercase tracking-widest text-stone-600 font-semibold ml-4">Warm Wishes</label>
+            <textarea name="message" placeholder="Your Blessings & Messages..." class="w-full bg-white/70 border border-stone-200 p-5 rounded-[30px] h-36 outline-none focus:border-rose-400 focus:bg-white transition-all duration-300 text-stone-900"></textarea>
+          </div>
+
+          <button type="submit" class="luxury-btn w-full py-5 text-sm font-semibold tracking-[0.25em] !bg-[#201216] !text-white hover:!bg-black border-none mt-4">Confirm Response</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="section-royal py-32 px-6 md:px-16 text-center relative overflow-hidden">
+      <div class="absolute inset-0 opacity-50 pointer-events-none">
+        <div class="absolute inset-0 bg-[radial-gradient(700px_500px_at_20%_30%,rgba(243,200,139,0.22),rgba(243,200,139,0)_60%),radial-gradient(700px_500px_at_80%_70%,rgba(255,255,255,0.10),rgba(255,255,255,0)_60%)]"></div>
+        <div class="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,77,109,0.12),rgba(139,92,246,0.12),rgba(43,182,115,0.12))] animate-[pulse_8s_ease-in-out_infinite]"></div>
+      </div>
+
+      <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+        <h2 class="calligraphy text-8xl md:text-9xl text-[color:var(--gold)] leading-none">Thank You</h2>
+        <p class="text-sm md:text-lg tracking-[0.2em] uppercase text-white/80 font-semibold">With absolute love, Veena & Praveen</p>
+        <div class="text-xs tracking-[0.4em] text-white/60 uppercase pt-12">#VeenaAndPraveen2026</div>
+      </div>
+    </section>
+
+    <footer class="section-royal px-6 md:px-16 py-16">
+      <div class="max-w-6xl mx-auto text-center space-y-10">
+        <div class="space-y-3">
+          <div class="text-[11px] tracking-[0.35em] uppercase text-white/70 font-semibold">Made With Love For Your Love - Creations By Raaya</div>
+          <div class="flex items-center justify-center pt-2">
+            <div class="wax-seal !w-[84px] !h-[84px] !shadow-none !cursor-default relative">
+              <span class="seal-monogram text-xl text-white select-none pointer-events-none">R</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-4">
+          <a class="contact-icon" href="tel:+910000000000" aria-label="Phone">
+            <span class="text-white text-xs tracking-[0.25em] font-semibold">CALL</span>
+          </a>
+          <a class="contact-icon" href="https://wa.me/910000000000" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <span class="text-white text-xs tracking-[0.25em] font-semibold">WA</span>
+          </a>
+          <a class="contact-icon" href="https://instagram.com/creationsbyraaya" target="_blank" rel="noopener" aria-label="Instagram">
+            <span class="text-white text-xs tracking-[0.25em] font-semibold">IG</span>
+          </a>
+          <a class="contact-icon" href="mailto:hello@creationsbyraaya.com" aria-label="Email">
+            <span class="text-white text-xs tracking-[0.25em] font-semibold">MAIL</span>
+          </a>
+        </div>
+
+        <div class="text-[10px] tracking-[0.35em] uppercase text-white/55">Ultra‑luxury wedding web invite</div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 1. Kinetic Smooth Scroll Configuration via Lenis
+    const lenis = new Lenis({
+      duration: 1.4,
+      smoothWheel: true,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+    });
+
+    // Prevent background scroll during the curtain / preloader
+    lenis.stop();
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    document.body.style.overflow = 'hidden';
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // 2. Preloader Split Opening Assembly Sequence
+    const sealButton = document.getElementById('sealButton');
+    
+    sealButton.addEventListener('click', () => {
+      const preloaderTimeline = gsap.timeline({
+        onComplete: () => {
+          document.getElementById('preloader').style.display = 'none';
+          document.body.style.overflow = '';
+          window.scrollTo(0, 0);
+          lenis.scrollTo(0, { immediate: true });
+          lenis.start();
+          triggerHeroAnimations();
+        }
+      });
+
+      preloaderTimeline.to('#loaderText', {
+        opacity: 0,
+        y: -30,
+        duration: 0.5,
+        ease: 'power2.in'
+      })
+      .to('.loader-left', { xPercent: -100, duration: 1.2, ease: 'power4.inOut' }, '-=0.2')
+      .to('.loader-right', { xPercent: 100, duration: 1.2, ease: 'power4.inOut' }, '-=1.2')
+      .to('#sealButton', { scale: 0, opacity: 0, duration: 0.8, ease: 'power3.in' }, '-=1.2');
+    });
+
+    // 3. Hero Entrance Animations Execution
+    gsap.set('.hero-reveal-line', { yPercent: 100 });
+    
+    function triggerHeroAnimations() {
+      gsap.to('.hero-reveal-line', {
+        yPercent: 0,
+        duration: 1.4,
+        stagger: 0.15,
+        ease: 'power4.out'
+      });
+
+      gsap.to('.hero-gradient, .hero-dark, .section-royal', {
+        backgroundPosition: '100% 50%',
+        duration: 15,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut'
+      });
+    }
+
+    // 4. Scratch-to-Reveal (canvas scratch)
+    const scratchCard = document.getElementById('scratchCard');
+    const scratchOverlay = document.getElementById('scratchOverlay');
+    const scratchCanvas = document.getElementById('scratchCanvas');
+
+    function setupScratch() {
+      if (!scratchCard || !scratchOverlay || !scratchCanvas) return;
+      const ctx = scratchCanvas.getContext('2d');
+      if (!ctx) return;
+
+      const DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      const rect = scratchCard.getBoundingClientRect();
+      const width = Math.max(1, Math.floor(rect.width));
+      const height = Math.max(1, Math.floor(rect.height));
+
+      scratchCanvas.width = Math.floor(width * DPR);
+      scratchCanvas.height = Math.floor(height * DPR);
+      scratchCanvas.style.width = `${width}px`;
+      scratchCanvas.style.height = `${height}px`;
+
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      ctx.globalCompositeOperation = 'source-over';
+
+      // Solid Deep Darkest Maroon scratch layer
+      ctx.fillStyle = '#2d0a0a';
+      ctx.fillRect(0, 0, width, height);
+
+      for (let i = 0; i < 18; i++) {
+        ctx.beginPath();
+        ctx.arc((width * i) / 18, (height * ((i % 5) + 1)) / 6, 30, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.lineWidth = 45;
+
+      let isDown = false;
+      let scratched = false;
+
+      function getPoint(e) {
+        const r = scratchCanvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return { x: clientX - r.left, y: clientY - r.top };
+      }
+
+      let lastPoint = null;
+      function scratchAt(x, y) {
+        scratched = true;
+        if (lastPoint) {
+          ctx.beginPath();
+          ctx.moveTo(lastPoint.x, lastPoint.y);
+          ctx.lineTo(x, y);
+          ctx.stroke();
+        } else { // Draw a circle for the very first point
+          ctx.beginPath();
+          ctx.arc(x, y, ctx.lineWidth / 2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        lastPoint = { x, y };
+      }
+
+      function revealIfEnough() {
+        if (!scratched) return;
+        const sample = ctx.getImageData(0, 0, width, height).data;
+        let transparent = 0;
+        for (let i = 3; i < sample.length; i += 16) {
+          if (sample[i] === 0) transparent++;
+        }
+        const ratio = transparent / (sample.length / 16);
+        if (ratio > 0.40) {
+          gsap.to([scratchOverlay, scratchCanvas], { opacity: 0, duration: 0.6, ease: 'power2.out' });
+          gsap.to('#scratchSurface', { background: 'transparent', boxShadow: 'none', duration: 0.8 });
+          scratchCanvas.style.pointerEvents = 'none';
+        }
+      }
+
+      scratchCanvas.style.pointerEvents = 'auto';
+
+      const onDown = (e) => { isDown = true; lastPoint = getPoint(e); scratchAt(lastPoint.x, lastPoint.y); e.preventDefault(); };
+      const onMove = (e) => { if (!isDown) return; const p = getPoint(e); scratchAt(p.x, p.y); e.preventDefault(); };
+      const onUp = () => { isDown = false; lastPoint = null; revealIfEnough(); };
+
+      scratchCanvas.addEventListener('mousedown', onDown);
+      scratchCanvas.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onUp);
+
+      scratchCanvas.addEventListener('touchstart', onDown, { passive: false });
+      scratchCanvas.addEventListener('touchmove', onMove, { passive: false });
+      window.addEventListener('touchend', onUp);
+
+      // quick fallback for keyboard / click
+      scratchCard.addEventListener('dblclick', () => {
+        gsap.to([scratchOverlay, scratchCanvas], { opacity: 0, duration: 0.45, ease: 'power2.out' });
+        scratchCanvas.style.pointerEvents = 'none';
+      });
+    }
+
+    setupScratch();
+    window.addEventListener('resize', () => {
+      // re-init on resize without stacking listeners
+      const canvas = document.getElementById('scratchCanvas');
+      if (canvas && canvas.parentElement) {
+        const fresh = canvas.cloneNode(true);
+        canvas.parentElement.replaceChild(fresh, canvas);
+      }
+      if (scratchOverlay) scratchOverlay.style.opacity = '';
+      setupScratch();
+    });
+
+    // 5. Scroll-Linked "Glass Butter" Parallax Scrubbing Elements
+    gsap.to('#heroBG', {
+      yPercent: 25,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero-gradient',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+
+    // 5. Subtle parallax for full-bleed media
+    gsap.utils.toArray('[data-reveal=\"media\"]').forEach((img) => {
+      gsap.fromTo(img,
+        { yPercent: -4, scale: 1.06 },
+        {
+          yPercent: 4,
+          scale: 1.0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: img.parentElement,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+          }
+        }
+      );
+    });
+
+    // 6. Section + element reveals (alive scroll feel)
+    const revealTargets = gsap.utils.toArray('.glass-slab, .royal-frame, .luxury-btn, .contact-icon, .hero-reveal-line');
+    revealTargets.forEach((el) => {
+      gsap.fromTo(el,
+        { opacity: 0, y: 32 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1.15,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 86%',
+            toggleActions: 'play none none reverse'
+          }
+        }
+      );
+    });
+  </script>
+</body>
+</html>
