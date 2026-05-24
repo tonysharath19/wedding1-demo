@@ -48,6 +48,15 @@
     
     html {
       overflow-x: hidden;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Hide native scrollbars for a clean Lenis experience */
+    ::-webkit-scrollbar { display: none; }
+    * {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
 
     body {
@@ -100,16 +109,17 @@
     /* Premium Heavy Translucent Glass */
     .glass-slab {
       background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
     }
 
     .glass-royal {
-      background: rgba(12, 6, 16, 0.28);
-      backdrop-filter: blur(26px);
-      -webkit-backdrop-filter: blur(26px);
-      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.35);
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
     }
 
     .reveal-mask {
@@ -220,7 +230,7 @@
     .mehendi-landing-bg, .haldi-landing-bg, .sangeet-landing-bg, 
     .wedding-landing-bg, .reception-landing-bg, .venue-landing-bg, 
     .rsvp-landing-bg {
-      min-height: 100svh;
+      height: 100svh;
     }
 
     .hero-landing-bg {
@@ -576,7 +586,8 @@
       .hero-landing-bg, .timeline-landing-bg, .rituals-landing-bg, 
       .mehendi-landing-bg, .haldi-landing-bg, .sangeet-landing-bg, 
       .wedding-landing-bg, .reception-landing-bg, .venue-landing-bg,
-      .rsvp-landing-bg {
+      .rsvp-landing-bg,
+      .section-royal-footer {
         height: 100svh !important;
       }
     }
@@ -800,8 +811,8 @@
             <h2 class="text-4xl md:text-6xl font-bold tracking-wide text-white">Zareqia Grand Pavilion</h2>
           </div>
           
-          <a class="luxury-btn seal-monogram inline-flex items-center gap-3 !bg-white/10 font-bold hover:!bg-white hover:!text-stone-900 border border-white/20"
-             style="color: var(--gold) !important;" target="_blank"
+          <a class="luxury-btn seal-monogram inline-flex items-center gap-3 !bg-[#f3c88b] !text-[#2a1434] font-bold border-none shadow-xl hover:!bg-white transition-all"
+             target="_blank"
              rel="noopener"
              href="https://www.google.com/maps/dir/?api=1&destination=Zareqia%20Grand%20Pavilion%2C%201042%20Orchid%20Pastel%20Boulevard%2C%20Serenity%20Valley%2C%20India">
             Get Directions
@@ -810,87 +821,85 @@
       </div>
     </section>
 
-    <section class="hero-dark rsvp-landing-bg min-svh flex items-center justify-center md:justify-end px-6 md:px-24 py-24 overflow-hidden relative" style="z-index: 21;">
-      <div class="max-w-xl w-full text-center md:text-right space-y-10 relative z-10">
-        <div class="space-y-3">
-          <span class="calligraphy text-7xl md:text-8xl text-[color:var(--gold)] block">RSVP</span>
-          <h2 class="text-4xl md:text-6xl font-light text-white tracking-wide">Share Your Presence</h2>
-          <p class="text-[11px] md:text-xs tracking-[0.45em] uppercase text-white/70 font-bold">A quick note helps us welcome you perfectly</p>
+    <section class="hero-dark rsvp-landing-bg min-svh flex items-center justify-center md:justify-end px-6 md:px-32 py-12 overflow-hidden relative" style="z-index: 21;">
+      <div class="max-w-[90%] md:max-w-md w-full text-center space-y-6 relative z-10 glass-royal p-8 md:p-10 rounded-[44px]">
+        <div class="space-y-2">
+          <span class="calligraphy text-6xl md:text-7xl text-[#f3c88b] block">RSVP</span>
+          <h2 class="text-2xl md:text-3xl font-light text-white tracking-wide">Share Your Presence</h2>
+          <p class="text-[9px] md:text-[10px] tracking-[0.4em] uppercase text-white/80 font-bold">A quick note helps us welcome you perfectly</p>
         </div>
 
-        <form action="https://formspree.io/f/yourFormID" method="POST" class="space-y-8 text-center md:text-right">
+        <form action="https://formspree.io/f/yourFormID" method="POST" class="space-y-5 text-center">
           <input type="hidden" name="_subject" value="Wedding RSVP — Veena & Praveen" />
 
-          <div class="space-y-2 text-center md:text-right">
-            <label class="text-[10px] uppercase tracking-[0.4em] text-[color:var(--gold)] font-bold md:mr-4 block">Full Name</label>
-            <input name="name" type="text" placeholder="Your Name" required class="w-full bg-transparent border-b border-[color:var(--gold-soft)] p-4 outline-none text-[color:var(--gold)] placeholder:text-white/40 font-['Cormorant_Garamond'] text-xl md:text-2xl focus:border-[color:var(--gold)] transition-colors text-center md:text-right">
+          <div class="space-y-1 text-center">
+            <label class="text-[10px] uppercase tracking-[0.3em] text-white font-bold block">Full Name</label>
+            <input name="name" type="text" placeholder="Your Name" required class="w-full bg-white/5 border-b border-white/20 p-3 outline-none text-white placeholder:text-white/30 font-['Cormorant_Garamond'] text-lg md:text-xl focus:border-[#f3c88b] transition-all text-center">
           </div>
           
-          <div class="space-y-2 text-center md:text-right">
-            <label class="text-[10px] uppercase tracking-[0.4em] text-[color:var(--gold)] font-bold md:mr-4 block">Phone Number</label>
-            <input name="phone" type="tel" placeholder="Phone Number" required class="w-full bg-transparent border-b border-[color:var(--gold-soft)] p-4 outline-none text-[color:var(--gold)] placeholder:text-white/40 font-['Cormorant_Garamond'] text-xl md:text-2xl focus:border-[color:var(--gold)] transition-colors text-center md:text-right">
+          <div class="space-y-1 text-center">
+            <label class="text-[10px] uppercase tracking-[0.3em] text-white font-bold block">Phone Number</label>
+            <input name="phone" type="tel" placeholder="Phone Number" required class="w-full bg-white/5 border-b border-white/20 p-3 outline-none text-white placeholder:text-white/30 font-['Cormorant_Garamond'] text-lg md:text-xl focus:border-[#f3c88b] transition-all text-center">
           </div>
 
-          <div class="space-y-2 text-center md:text-right">
-            <label class="text-[10px] uppercase tracking-[0.4em] text-[color:var(--gold)] font-bold md:mr-4 block">Attendance Status</label>
-            <select name="attendance" class="w-full bg-transparent border-b border-[color:var(--gold-soft)] p-4 outline-none text-[color:var(--gold)] font-['Cormorant_Garamond'] text-xl md:text-2xl appearance-none text-center md:text-right">
+          <div class="space-y-1 text-center">
+            <label class="text-[10px] uppercase tracking-[0.3em] text-white font-bold block">Attendance Status</label>
+            <select name="attendance" class="w-full bg-white/5 border-b border-white/20 p-3 outline-none text-white font-['Cormorant_Garamond'] text-lg md:text-xl appearance-none text-center cursor-pointer focus:border-[#f3c88b] transition-all">
               <option value="Joyfully Accept">Joyfully Accept</option>
               <option value="Regretfully Decline">Regretfully Decline</option>
             </select>
           </div>
 
-          <div class="space-y-2 text-center md:text-right">
-            <label class="text-[10px] uppercase tracking-[0.4em] text-[color:var(--gold)] font-bold md:mr-4 block">Warm Wishes</label>
-            <textarea name="message" placeholder="Your Blessings & Messages..." class="w-full bg-transparent border-b border-[color:var(--gold-soft)] p-4 h-32 outline-none text-[color:var(--gold)] placeholder:text-white/40 font-['Cormorant_Garamond'] text-xl md:text-2xl focus:border-[color:var(--gold)] transition-colors text-center md:text-right resize-none"></textarea>
+          <div class="space-y-1 text-center">
+            <label class="text-[10px] uppercase tracking-[0.3em] text-white font-bold block">Warm Wishes</label>
+            <textarea name="message" placeholder="Your Blessings..." class="w-full bg-white/5 border-b border-white/20 p-3 h-24 outline-none text-white placeholder:text-white/30 font-['Cormorant_Garamond'] text-lg md:text-xl focus:border-[#f3c88b] transition-all text-center resize-none"></textarea>
           </div>
 
-          <button type="submit" class="luxury-btn w-full py-5 text-sm font-semibold tracking-[0.25em] !bg-[color:var(--gold)] !text-[#2a1434] hover:!bg-white border-none mt-4">Confirm Response</button>
+          <button type="submit" class="luxury-btn w-full py-4 text-[10px] font-semibold tracking-[0.25em] !bg-[#f3c88b] !text-[#2a1434] hover:!bg-white border-none mt-2 shadow-xl">Confirm Response</button>
         </form>
       </div>
     </section>
 
-    <section class="section-royal py-32 px-6 md:px-16 text-center relative overflow-hidden" style="z-index: 22;">
+    <section class="section-royal section-royal-footer h-[100svh] relative overflow-hidden flex flex-col items-stretch royal-frame" style="z-index: 22;">
       <div class="absolute inset-0 opacity-50 pointer-events-none">
-        <div class="absolute inset-0 bg-[radial-gradient(700px_500px_at_20%_30%,rgba(243,200,139,0.22),rgba(243,200,139,0)_60%),radial-gradient(700px_500px_at_80%_70%,rgba(255,255,255,0.10),rgba(255,255,255,0)_60%)]"></div>
-        <div class="absolute inset-0 bg-[linear-gradient(120deg,rgba(255,77,109,0.12),rgba(139,92,246,0.12),rgba(43,182,115,0.12))] animate-[pulse_8s_ease-in-out_infinite]"></div>
+        <div class="absolute inset-0 bg-[radial-gradient(700px_500px_at_20%_30%,rgba(243,200,139,0.22),rgba(243,200,139,0)_60%)]"></div>
+      </div>
+      
+      <!-- Top Half: Thank You -->
+      <div class="h-1/2 flex flex-col justify-center items-center py-10 px-4 text-center border-b border-white/10 relative z-10">
+        <h2 class="calligraphy text-5xl md:text-8xl text-[color:var(--gold)] leading-none">Thank You</h2>
+        <p class="text-[10px] md:text-base tracking-[0.1em] md:tracking-[0.2em] uppercase text-white/80 font-semibold mt-4">With Love, Veena & Praveen</p>
+        <div class="text-[8px] md:text-xs tracking-[0.2em] md:tracking-[0.4em] text-white/60 uppercase mt-6">#VeenaAndPraveen2026</div>
       </div>
 
-      <div class="max-w-4xl mx-auto space-y-6 relative z-10">
-        <h2 class="calligraphy text-8xl md:text-9xl text-[color:var(--gold)] leading-none">Thank You</h2>
-        <p class="text-sm md:text-lg tracking-[0.2em] uppercase text-white/80 font-semibold">With absolute love, Veena & Praveen</p>
-        <div class="text-xs tracking-[0.4em] text-white/60 uppercase pt-12">#VeenaAndPraveen2026</div>
-      </div>
-    </section>
-
-    <footer class="section-royal px-6 md:px-16 py-16">
-      <div class="max-w-6xl mx-auto text-center space-y-10">
-        <div class="space-y-3">
-          <div class="text-[11px] tracking-[0.35em] uppercase text-white/70 font-semibold">Made With Love For Your Love - Creations By Raaya</div>
-          <div class="flex items-center justify-center pt-2">
-            <div class="wax-seal !w-[84px] !h-[84px] !shadow-none !cursor-default relative">
-              <span class="seal-monogram text-xl text-white select-none pointer-events-none">R</span>
+      <!-- Bottom Half: Footer -->
+      <div class="h-1/2 flex flex-col justify-center items-center py-10 px-4 text-center relative z-10 space-y-4 md:space-y-6">
+        <div class="space-y-2 md:space-y-3">
+          <div class="text-[9px] md:text-[11px] tracking-[0.2em] uppercase text-white/70 font-semibold">Creations By Raaya</div>
+          <div class="flex items-center justify-center">
+            <div class="wax-seal !w-[50px] !h-[50px] md:!w-[84px] md:!h-[84px] !shadow-none !cursor-default relative">
+              <span class="seal-monogram text-lg md:text-xl text-white">R</span>
             </div>
           </div>
         </div>
 
-        <div class="flex flex-wrap items-center justify-center gap-4">
-          <a class="contact-icon" href="tel:+910000000000" aria-label="Phone">
-            <span class="text-white text-xs tracking-[0.25em] font-semibold">CALL</span>
+        <div class="flex items-center justify-center gap-3 md:gap-4">
+          <a class="contact-icon !w-8 !h-8 md:!w-11 md:!h-11" href="tel:+910000000000" aria-label="Phone">
+            <svg class="w-3.5 h-3.5 md:w-5 md:h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
           </a>
-          <a class="contact-icon" href="https://wa.me/910000000000" target="_blank" rel="noopener" aria-label="WhatsApp">
-            <span class="text-white text-xs tracking-[0.25em] font-semibold">WA</span>
+          <a class="contact-icon !w-8 !h-8 md:!w-11 md:!h-11" href="https://wa.me/910000000000" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg class="w-3.5 h-3.5 md:w-5 md:h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.81 9.81 0 0012.04 2zm.01 18.11c-1.57 0-3.11-.42-4.46-1.21l-.32-.19-3.3.87.88-3.22-.21-.33c-.86-1.37-1.32-2.95-1.32-4.59 0-4.78 3.88-8.66 8.66-8.66 2.32 0 4.5.9 6.13 2.53 1.63 1.63 2.53 3.82 2.53 6.13 0 4.79-3.89 8.67-8.66 8.67zm4.75-6.51c-.26-.13-1.54-.76-1.78-.85-.24-.09-.41-.13-.58.13-.17.26-.67.85-.82 1.02-.15.17-.31.2-.57.07-.26-.13-1.1-.41-2.09-1.3-.77-.69-1.29-1.54-1.44-1.8-.15-.26-.02-.4.12-.53.12-.11.26-.31.4-.46.13-.15.17-.26.26-.43.09-.17.04-.32-.02-.45-.06-.13-.58-1.4-.79-1.92-.21-.5-.42-.43-.58-.44-.15-.01-.32-.01-.5-.01-.17 0-.45.06-.68.32-.24.26-.91.89-.91 2.16 0 1.27.93 2.51 1.06 2.68.13.17 1.83 2.79 4.43 3.92.62.27 1.1.43 1.48.55.62.2 1.19.17 1.63.1.5-.07 1.54-.63 1.76-1.24.22-.61.22-1.13.15-1.24-.07-.11-.26-.18-.51-.31z"/></svg>
           </a>
-          <a class="contact-icon" href="https://instagram.com/creationsbyraaya" target="_blank" rel="noopener" aria-label="Instagram">
-            <span class="text-white text-xs tracking-[0.25em] font-semibold">IG</span>
+          <a class="contact-icon !w-8 !h-8 md:!w-11 md:!h-11" href="https://instagram.com/creationsbyraaya" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg class="w-3.5 h-3.5 md:w-5 md:h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.332 3.608 1.308.975.975 1.245 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.063 1.366-.333 2.633-1.308 3.608-.975.975-2.242 1.245-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.063-2.633-.333-3.608-1.308-.975-.975-1.245-2.242-1.308-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.332-2.633 1.308-3.608.975-.975 2.242-1.245 3.608-1.308 1.266-.058 1.646-.07 4.85-.07zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.355 2.618 6.778 6.98 6.978 1.28.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.058-1.28.072-1.689.072-4.948 0-3.259-.014-3.668-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
           </a>
-          <a class="contact-icon" href="mailto:hello@creationsbyraaya.com" aria-label="Email">
-            <span class="text-white text-xs tracking-[0.25em] font-semibold">MAIL</span>
+          <a class="contact-icon !w-8 !h-8 md:!w-11 md:!h-11" href="mailto:hello@creationsbyraaya.com" aria-label="Email">
+            <svg class="w-3.5 h-3.5 md:w-5 md:h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
           </a>
         </div>
-
-        <div class="text-[10px] tracking-[0.35em] uppercase text-white/55">Ultra‑luxury wedding web invite</div>
+        <div class="text-[8px] md:text-[10px] tracking-[0.2em] uppercase text-white/40">Luxury wedding web invite</div>
       </div>
-    </footer>
+    </section>
 
   </div>
 
@@ -1173,7 +1182,7 @@
     });
 
     // 6. Section + element reveals (alive scroll feel)
-    const revealTargets = gsap.utils.toArray('.glass-slab, .royal-frame, .luxury-btn, .contact-icon, .hero-reveal-line');
+    const revealTargets = gsap.utils.toArray('.glass-slab, .royal-frame, .luxury-btn:not([type="submit"]), .contact-icon, .hero-reveal-line');
     revealTargets.forEach((el) => {
       gsap.fromTo(el,
         { opacity: 0, y: 32 },
