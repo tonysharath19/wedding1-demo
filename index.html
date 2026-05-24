@@ -554,6 +554,18 @@
       overflow-x: hidden;
       border: none !important;
     }
+
+    /* Mobile Height Fixes to match Hero section */
+    @media (max-width: 767px) {
+      .hero-landing-bg, .timeline-landing-bg, .rituals-landing-bg, 
+      .mehendi-landing-bg, .haldi-landing-bg, .sangeet-landing-bg, 
+      .wedding-landing-bg, .reception-landing-bg, .venue-landing-bg {
+        height: 100svh !important;
+      }
+      .palette-5 {
+        min-height: 100svh !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -775,7 +787,7 @@
           </div>
           
           <a class="luxury-btn seal-monogram inline-flex items-center gap-3 !bg-white/10 !text-white font-bold hover:!bg-white hover:!text-stone-900 border border-white/20"
-             target="_blank"
+             style="color: var(--gold) !important;" target="_blank"
              rel="noopener"
              href="https://www.google.com/maps/dir/?api=1&destination=Zareqia%20Grand%20Pavilion%2C%201042%20Orchid%20Pastel%20Boulevard%2C%20Serenity%20Valley%2C%20India">
             Get Directions
@@ -784,7 +796,7 @@
       </div>
     </section>
 
-    <section class="palette-5 py-32 px-6 md:px-16 overflow-hidden relative" style="z-index: 21;">
+    <section class="palette-5 min-svh py-32 px-6 md:px-16 overflow-hidden relative" style="z-index: 21;">
       <div class="max-w-2xl mx-auto text-center space-y-10">
         <div class="space-y-3">
           <span class="calligraphy text-6xl md:text-7xl text-rose-800">RSVP</span>
@@ -971,6 +983,7 @@
     const scratchCanvas = document.getElementById('scratchCanvas');
     let isDown = false;
     let lastPoint = null;
+    let scratchCount = 0;
     let scratched = false;
 
     const onUp = () => { isDown = false; lastPoint = null; if(window.revealIfEnough) window.revealIfEnough(); };
@@ -1025,6 +1038,7 @@
 
       window.scratchAt = function(x, y) {
         scratched = true;
+        scratchCount++;
         if (lastPoint) {
           ctx.beginPath();
           ctx.moveTo(lastPoint.x, lastPoint.y);
@@ -1039,7 +1053,8 @@
       };
 
       window.revealIfEnough = function() {
-        if (!scratched) return;
+        // Require a minimum amount of scratching to prevent accidental reveal on mobile taps
+        if (!scratched || scratchCount < 30) return;
         // Physical dimensions must be used for getImageData to work on all screens
         const physWidth = scratchCanvas.width;
         const physHeight = scratchCanvas.height;
@@ -1098,14 +1113,19 @@
     }
 
     setupScratch();
+    
+    let lastWidth = window.innerWidth;
     window.addEventListener('resize', () => {
-      // re-init on resize without stacking listeners
+      // Only re-init if the width changes (avoids resetting canvas when mobile URL bar hides/shows)
+      if (window.innerWidth === lastWidth) return;
+      lastWidth = window.innerWidth;
+      
       const canvas = document.getElementById('scratchCanvas');
       if (canvas && canvas.parentElement) {
         const fresh = canvas.cloneNode(true);
         canvas.parentElement.replaceChild(fresh, canvas);
+        setupScratch();
       }
-      setupScratch();
     });
 
     // 5. Scroll-Linked "Glass Butter" Parallax Scrubbing Elements
