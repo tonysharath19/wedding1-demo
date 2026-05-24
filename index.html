@@ -116,8 +116,8 @@
 
     .glass-royal {
       background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
       border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
     }
@@ -443,7 +443,6 @@
       filter: saturate(1.1) contrast(1.05);
       box-shadow: 0 40px 120px rgba(0,0,0,0.6);
       border-radius: 20px;
-      opacity: 0; /* Handled by GSAP */
     }
 
     .wax-seal {
@@ -837,29 +836,29 @@
     </section>
 
     <section class="hero-dark rsvp-landing-bg min-svh flex items-center justify-center md:justify-end px-6 md:px-32 py-12 overflow-hidden relative" style="z-index: 21;">
-      <div class="max-w-[90%] md:max-w-md w-full text-center space-y-4 md:space-y-6 relative z-10 glass-royal p-5 md:p-10 rounded-[44px]">
-        <div class="space-y-1 md:space-y-2">
-          <span class="calligraphy text-5xl md:text-7xl text-[#f3c88b] block">RSVP</span>
-          <h2 class="text-xl md:text-3xl font-light text-white tracking-wide">Share Your Presence</h2>
+      <div class="max-w-[85%] md:max-w-[280px] w-full text-center space-y-3 md:space-y-2 relative z-10 glass-royal p-4 md:p-5 rounded-[32px]">
+        <div class="space-y-1 md:space-y-0.5">
+          <span class="calligraphy text-5xl md:text-5xl text-[#f3c88b] block">RSVP</span>
+          <h2 class="text-xl md:text-xl font-light text-white tracking-wide">Share Your Presence</h2>
           <p class="text-[8px] md:text-[10px] tracking-[0.4em] uppercase text-white/80 font-bold">A quick note helps us welcome you perfectly</p>
         </div>
 
-        <form action="https://formspree.io/f/yourFormID" method="POST" class="space-y-3 md:space-y-5 text-center">
+        <form action="https://formspree.io/f/yourFormID" method="POST" class="space-y-3 md:space-y-2 text-center">
           <input type="hidden" name="_subject" value="Wedding RSVP — Veena & Praveen" />
 
           <div class="space-y-1 text-center">
             <label class="text-[10px] uppercase tracking-[0.3em] text-white font-bold block">Full Name</label>
-            <input name="name" type="text" placeholder="Your Name" required class="w-full bg-white/5 border-b border-white/20 p-2 md:p-3 outline-none text-white placeholder:text-white/30 font-['Cormorant_Garamond'] text-lg md:text-xl focus:border-[#f3c88b] transition-all text-center">
+            <input name="name" type="text" placeholder="Your Name" required class="w-full bg-white/5 border-b border-white/20 p-2 md:p-2 outline-none text-white placeholder:text-white/30 font-['Cormorant_Garamond'] text-lg md:text-sm focus:border-[#f3c88b] transition-all text-center">
           </div>
           
           <div class="space-y-1 text-center">
             <label class="text-[10px] uppercase tracking-[0.3em] text-white font-bold block">Phone Number</label>
-            <input name="phone" type="tel" placeholder="Phone Number" required class="w-full bg-white/5 border-b border-white/20 p-2 md:p-3 outline-none text-white placeholder:text-white/30 font-['Cormorant_Garamond'] text-lg md:text-xl focus:border-[#f3c88b] transition-all text-center">
+            <input name="phone" type="tel" placeholder="Phone Number" required class="w-full bg-white/5 border-b border-white/20 p-2 md:p-2 outline-none text-white placeholder:text-white/30 font-['Cormorant_Garamond'] text-lg md:text-sm focus:border-[#f3c88b] transition-all text-center">
           </div>
 
           <div class="space-y-1 text-center">
             <label class="text-[10px] uppercase tracking-[0.3em] text-white font-bold block">Attendance Status</label>
-            <select name="attendance" class="w-full bg-white/5 border-b border-white/20 p-2 md:p-3 outline-none text-white font-['Cormorant_Garamond'] text-lg md:text-xl appearance-none text-center cursor-pointer focus:border-[#f3c88b] transition-all">
+            <select name="attendance" class="w-full bg-white/5 border-b border-white/20 p-2 md:p-2 outline-none text-white font-['Cormorant_Garamond'] text-lg md:text-sm appearance-none text-center cursor-pointer focus:border-[#f3c88b] transition-all">
               <option value="Joyfully Accept">Joyfully Accept</option>
               <option value="Regretfully Decline">Regretfully Decline</option>
             </select>
@@ -867,10 +866,10 @@
 
           <div class="space-y-1 text-center">
             <label class="text-[10px] uppercase tracking-[0.3em] text-white font-bold block">Warm Wishes</label>
-            <textarea name="message" placeholder="Your Blessings..." class="w-full bg-white/5 border-b border-white/20 p-2 md:p-3 h-20 md:h-24 outline-none text-white placeholder:text-white/30 font-['Cormorant_Garamond'] text-lg md:text-xl focus:border-[#f3c88b] transition-all text-center resize-none"></textarea>
+            <textarea name="message" placeholder="Your Blessings..." class="w-full bg-white/5 border-b border-white/20 p-2 md:p-2 h-20 md:h-14 outline-none text-white placeholder:text-white/30 font-['Cormorant_Garamond'] text-lg md:text-sm focus:border-[#f3c88b] transition-all text-center resize-none"></textarea>
           </div>
 
-          <button type="submit" class="luxury-btn w-full py-3 md:py-4 text-[10px] font-semibold tracking-[0.25em] !bg-[#f3c88b] !text-[#2a1434] hover:!bg-white border-none mt-2 shadow-xl">Confirm Response</button>
+          <button type="submit" class="luxury-btn w-full py-3 md:py-2.5 text-[10px] font-semibold tracking-[0.25em] !bg-[#f3c88b] !text-[#2a1434] hover:!bg-white border-none mt-1 shadow-xl">Confirm Response</button>
         </form>
       </div>
     </section>
@@ -1261,44 +1260,55 @@
     }
     animateParticles();
 
-    // 8. Master Magical Stacking Gallery Timeline
-    const stack = document.querySelector('.gallery-stack');
-    const items = gsap.utils.toArray('.gallery-full');
+    // 8. Master Magical Stacking Gallery Timeline — Professionally Optimized
+    const galleryStack = document.querySelector('.gallery-stack');
+    const galleryItems = gsap.utils.toArray('.gallery-full');
 
-    // Prepare initial states
-    items.forEach((item, i) => {
-      gsap.set(item, { 
-        position: 'absolute', 
-        top: 0, 
-        left: 0, 
-        zIndex: 10 + i 
+    if (galleryItems.length > 0) {
+      // Ensure stack has spatial presence for ScrollTrigger to calculate pinning correctly
+      gsap.set(galleryStack, { minHeight: '100vh', position: 'relative' });
+
+      // Prepare initial states: First image visible, others hidden and ready to slide up
+      galleryItems.forEach((item, i) => {
+        gsap.set(item, { 
+          position: 'absolute', 
+          top: 0, 
+          left: 0, 
+          width: '100%',
+          zIndex: 20 + i 
+        });
+        const img = item.querySelector('img');
+        if (i > 0) {
+          gsap.set(img, { opacity: 0, yPercent: 100, clipPath: 'inset(100% 0% 0% 0%)' });
+        } else {
+          gsap.set(img, { opacity: 1, yPercent: 0, clipPath: 'inset(0% 0% 0% 0%)' });
+        }
       });
-      if (i > 0) gsap.set(item.querySelector('img'), { opacity: 0, yPercent: 100, clipPath: 'inset(100% 0% 0% 0%)' });
-    });
 
-    const galleryTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: stack,
-        start: "top top",
-        end: () => `+=${window.innerHeight * (items.length - 1)}`,
-        pin: true,
-        scrub: 1,
-        anticipatePin: 1
-      }
-    });
+      const galleryTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: galleryStack,
+          start: "top top",
+          end: () => `+=${window.innerHeight * (galleryItems.length - 1)}`,
+          pin: true,
+          scrub: true,
+          anticipatePin: 1
+        }
+      });
 
-    // Animate each image into view sequentially
-    items.forEach((item, i) => {
-      if (i === 0) return; // First image is already visible
-      const img = item.querySelector('img');
-      galleryTl.to(img, {
-        opacity: 1,
-        yPercent: 0,
-        clipPath: 'inset(0% 0% 0% 0%)',
-        ease: "none",
-        duration: 1
-      }, i - 1); 
-    });
+      // Animate each subsequent image into view sequentially
+      galleryItems.forEach((item, i) => {
+        if (i === 0) return; // First image stays base
+        const img = item.querySelector('img');
+        galleryTl.to(img, {
+          opacity: 1,
+          yPercent: 0,
+          clipPath: 'inset(0% 0% 0% 0%)',
+          ease: "none",
+          duration: 1
+        }, i - 1); 
+      });
+    }
   </script>
 </body>
 </html>
