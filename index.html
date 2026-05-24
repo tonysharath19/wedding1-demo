@@ -122,6 +122,12 @@
       box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
     }
 
+    .magical-bg {
+      background: linear-gradient(180deg, #13051c 0%, #2b0c35 30%, #4a1b52 50%, #2b0c35 70%, #0b0613 100%);
+      background-attachment: fixed;
+      position: relative;
+    }
+
     .reveal-mask {
       overflow: hidden;
       position: relative;
@@ -414,21 +420,30 @@
     }
 
     .gallery-full {
-      position: sticky;
-      top: 0;
       height: 100svh;
       width: 100%;
       overflow: hidden;
-      background: var(--royal-1);
       margin-top: -1px;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      /* Remove inherited section blur */
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
     }
+
     .gallery-full img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      width: 85%;
+      height: 80%;
+      object-fit: contain;
       object-position: center;
       display: block;
-      filter: saturate(1.05) contrast(1.02);
+      filter: saturate(1.1) contrast(1.05);
+      box-shadow: 0 40px 120px rgba(0,0,0,0.6);
+      border-radius: 20px;
+      opacity: 0; /* Handled by GSAP */
     }
 
     .wax-seal {
@@ -785,21 +800,21 @@
       </div>
     </section>
 
-    <div class="gallery-stack relative">
-      <section class="gallery-full royal-frame" style="z-index: 11;">
-        <img data-reveal="media" src="MEDIA/IMAGES/GALLERY/G1.png" alt="Gallery image 1">
+    <div class="gallery-stack relative magical-bg">
+      <!-- Magical Gold Dust Canvas -->
+      <canvas id="dustCanvas" class="absolute inset-0 pointer-events-none z-10"></canvas>
+      
+      <section class="gallery-full royal-frame">
+        <img src="MEDIA/IMAGES/GALLERY/G-1.png" alt="Gallery image 1">
       </section>
-      <section class="gallery-full royal-frame" style="z-index: 12;">
-        <img data-reveal="media" src="MEDIA/IMAGES/GALLERY/G2.png" alt="Gallery image 2">
+      <section class="gallery-full royal-frame">
+        <img src="MEDIA/IMAGES/GALLERY/G-2.png" alt="Gallery image 2">
       </section>
-      <section class="gallery-full royal-frame" style="z-index: 13;">
-        <img data-reveal="media" src="MEDIA/IMAGES/GALLERY/G3.png" alt="Gallery image 3">
+      <section class="gallery-full royal-frame">
+        <img src="MEDIA/IMAGES/GALLERY/G-3.png" alt="Gallery image 3">
       </section>
-      <section class="gallery-full royal-frame" style="z-index: 14;">
-        <img data-reveal="media" src="MEDIA/IMAGES/GALLERY/G4.png" alt="Gallery image 4">
-      </section>
-      <section class="gallery-full royal-frame" style="z-index: 15;">
-        <img data-reveal="media" src="MEDIA/IMAGES/GALLERY/G5.png" alt="Gallery image 5">
+      <section class="gallery-full royal-frame">
+        <img src="MEDIA/IMAGES/GALLERY/G-4.png" alt="Gallery image 4">
       </section>
     </div>
 
@@ -818,7 +833,7 @@
             Get Directions
           </a>
         </div>
-      </div>
+      </div> 
     </section>
 
     <section class="hero-dark rsvp-landing-bg min-svh flex items-center justify-center md:justify-end px-6 md:px-32 py-12 overflow-hidden relative" style="z-index: 21;">
@@ -860,7 +875,7 @@
       </div>
     </section>
 
-    <section class="section-royal section-royal-footer h-[100svh] relative overflow-hidden flex flex-col items-stretch royal-frame" style="z-index: 22;">
+    <section class="section-royal section-royal-footer h-[100svh] relative overflow-hidden flex flex-col items-stretch royal-frame magical-bg" style="z-index: 22;">
       <div class="absolute inset-0 opacity-50 pointer-events-none">
         <div class="absolute inset-0 bg-[radial-gradient(700px_500px_at_20%_30%,rgba(243,200,139,0.22),rgba(243,200,139,0)_60%)]"></div>
       </div>
@@ -1198,6 +1213,91 @@
           }
         }
       );
+    });
+
+    // 7. Magical Gold Dust Particle System
+    const canvas = document.getElementById('dustCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = canvas.parentElement.offsetHeight || window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 1.5 + 0.5;
+        this.speedX = Math.random() * 0.5 - 0.25;
+        this.speedY = Math.random() * 0.5 - 0.25;
+        this.opacity = Math.random() * 0.5 + 0.2;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+      }
+      draw() {
+        ctx.fillStyle = `rgba(243, 200, 139, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 350; i++) particles.push(new Particle());
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // 8. Master Magical Stacking Gallery Timeline
+    const stack = document.querySelector('.gallery-stack');
+    const items = gsap.utils.toArray('.gallery-full');
+
+    // Prepare initial states
+    items.forEach((item, i) => {
+      gsap.set(item, { 
+        position: 'absolute', 
+        top: 0, 
+        left: 0, 
+        zIndex: 10 + i 
+      });
+      if (i > 0) gsap.set(item.querySelector('img'), { opacity: 0, yPercent: 100, clipPath: 'inset(100% 0% 0% 0%)' });
+    });
+
+    const galleryTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: stack,
+        start: "top top",
+        end: () => `+=${window.innerHeight * (items.length - 1)}`,
+        pin: true,
+        scrub: 1,
+        anticipatePin: 1
+      }
+    });
+
+    // Animate each image into view sequentially
+    items.forEach((item, i) => {
+      if (i === 0) return; // First image is already visible
+      const img = item.querySelector('img');
+      galleryTl.to(img, {
+        opacity: 1,
+        yPercent: 0,
+        clipPath: 'inset(0% 0% 0% 0%)',
+        ease: "none",
+        duration: 1
+      }, i - 1); 
     });
   </script>
 </body>
