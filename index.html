@@ -127,6 +127,9 @@
       background-attachment: fixed;
       position: relative;
     }
+    @media (max-width: 767px) {
+      .magical-bg { background-attachment: scroll; }
+    }
 
     .reveal-mask {
       overflow: hidden;
@@ -464,7 +467,7 @@
     /* Mobile: smooth one-swipe section landing */
     @media (max-width: 767px) {
       html { scroll-behavior: smooth; }
-      body { scroll-snap-type: y proximity; overscroll-behavior-y: contain; }
+      body { scroll-snap-type: y proximity; overscroll-behavior-y: contain; -webkit-overflow-scrolling: touch; }
       section { scroll-snap-align: start; }
     }
     @media (max-width: 767px) and (prefers-reduced-motion: reduce) {
@@ -1015,7 +1018,7 @@
         <div class="gallery-media image-frame">
           <picture>
             <source media="(max-width: 767px)" srcset="MEDIA/IMAGES/MOBILE/GALLERY/G1-M.png">
-            <img src="MEDIA/IMAGES/DESKTOP/GALLERY/G1-D.png" alt="Gallery image 1">
+            <img src="MEDIA/IMAGES/DESKTOP/GALLERY/G1-D.png" alt="Gallery image 1" loading="lazy" decoding="async">
           </picture>
         </div>
         <div class="gallery-copy glass-royal">
@@ -1032,7 +1035,7 @@
         <div class="gallery-media image-frame">
           <picture>
             <source media="(max-width: 767px)" srcset="MEDIA/IMAGES/MOBILE/GALLERY/G2-M.png">
-            <img src="MEDIA/IMAGES/DESKTOP/GALLERY/G2-D.png" alt="Gallery image 2">
+            <img src="MEDIA/IMAGES/DESKTOP/GALLERY/G2-D.png" alt="Gallery image 2" loading="lazy" decoding="async">
           </picture>
         </div>
         <div class="gallery-copy glass-royal">
@@ -1049,7 +1052,7 @@
         <div class="gallery-media image-frame">
           <picture>
             <source media="(max-width: 767px)" srcset="MEDIA/IMAGES/MOBILE/GALLERY/G3-M.png">
-            <img src="MEDIA/IMAGES/DESKTOP/GALLERY/G3-D.png" alt="Gallery image 3">
+            <img src="MEDIA/IMAGES/DESKTOP/GALLERY/G3-D.png" alt="Gallery image 3" loading="lazy" decoding="async">
           </picture>
         </div>
         <div class="gallery-copy glass-royal">
@@ -1066,7 +1069,7 @@
         <div class="gallery-media image-frame">
           <picture>
             <source media="(max-width: 767px)" srcset="MEDIA/IMAGES/MOBILE/GALLERY/G4-M.png">
-            <img src="MEDIA/IMAGES/DESKTOP/GALLERY/G4-D.png" alt="Gallery image 4">
+            <img src="MEDIA/IMAGES/DESKTOP/GALLERY/G4-D.png" alt="Gallery image 4" loading="lazy" decoding="async">
           </picture>
         </div>
         <div class="gallery-copy glass-royal">
@@ -1479,24 +1482,28 @@
     // Applies from Hero onward and keeps the scroll feeling tight/premium.
     // Excludes gallery-full (handled by gallery stack timeline below).
     function initStackedPanels() {
+      // Mobile browsers (especially iOS Safari) can get "stuck" when every section is pinned.
+      // Keep the same visuals/animations but disable pinning on mobile for reliable scroll.
+      const isMobile = () => window.innerWidth < 768;
       const panels = gsap.utils.toArray('#scroll-content > section');
 
       panels.forEach((panel, i) => {
         // Keep later panels above earlier ones while stacking
         gsap.set(panel, { position: 'relative', zIndex: 100 + i, willChange: 'transform, filter, clip-path' });
 
-        // Each panel pins at the top; next panel scrolls over it.
-        ScrollTrigger.create({
-          trigger: panel,
-          start: 'top top',
-          pin: true,
-          pinSpacing: false,
-          anticipatePin: 1,
-          invalidateOnRefresh: true
-        });
+        // Each panel pins at the top; next panel scrolls over it (desktop only).
+        if (!isMobile()) {
+          ScrollTrigger.create({
+            trigger: panel,
+            start: 'top top',
+            pin: true,
+            pinSpacing: false,
+            anticipatePin: 1,
+            invalidateOnRefresh: true
+          });
+        }
 
         // Optional subtle "curtain + lift" entrance as the panel approaches the top.
-        const isMobile = () => window.innerWidth < 768;
         const fromVars = () =>
           isMobile()
             ? { clipPath: 'inset(10% 6% 10% 6% round 44px)', opacity: 0.92, filter: 'blur(6px)', y: 16, scale: 0.992 }
