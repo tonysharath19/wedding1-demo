@@ -1459,3 +1459,1477 @@
   </script>
 </body>
 </html>
+---------------------------------------------------------------------------
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2a1434" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>Veena & Praveen — The Grand Wedding</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.16/dist/lenis.min.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --ink: #201216;
+      --ink-soft: rgba(32, 18, 22, 0.72);
+
+      --rose: #d85b7e;
+      --mauve: #8b5cf6;
+      --emerald: #2bb673;
+      --peach: #ffd1a6;
+
+      --pastel-1: #ffb2c3;
+      --pastel-2: #f0b6ff;
+      --pastel-3: #8ff1b2;
+      --pastel-4: #ffd1a6;
+
+      --royal-1: #18071f;
+      --royal-2: #2b0c35;
+      --royal-3: #4b1b52;
+      --gold: #f3c88b;
+      --gold-soft: rgba(243, 200, 139, 0.65);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      overflow-x: hidden;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Hide native scrollbars for a clean Lenis experience */
+    ::-webkit-scrollbar { display: none; }
+    * {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      background: var(--royal-1);
+      color: var(--ink);
+      -webkit-text-size-adjust: 100%;
+      text-rendering: geometricPrecision;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    .calligraphy { font-family: 'Great Vibes', cursive; }
+    .seal-monogram { font-family: 'Cinzel Decorative', serif; letter-spacing: 0.08em; }
+    .hero-name { font-family: 'Cinzel Decorative', serif; }
+
+    .embossed-name {
+      text-shadow:
+        0 2px 0 rgba(255,255,255,0.55),
+        0 10px 30px rgba(18, 10, 14, 0.28);
+      -webkit-text-stroke: 0.5px rgba(255,255,255,0.35);
+    }
+
+    /* Grand Vibrant Pastel Color Canvas Overlays */
+    .hero-gradient {
+      background: radial-gradient(1200px 900px at 20% 10%, rgba(255, 178, 195, 0.95) 0%, rgba(255, 178, 195, 0) 55%),
+                  radial-gradient(1200px 900px at 80% 20%, rgba(240, 182, 255, 0.9) 0%, rgba(240, 182, 255, 0) 58%),
+                  radial-gradient(1100px 800px at 60% 90%, rgba(143, 241, 178, 0.9) 0%, rgba(143, 241, 178, 0) 55%),
+                  linear-gradient(135deg, var(--pastel-1) 0%, #e9b3ff 32%, #9af2bb 68%, var(--pastel-4) 100%);
+      background-size: 400% 400%;
+    }
+    .palette-1 { background: linear-gradient(180deg, #ffb2c3 0%, #f8a9bd 100%); } 
+    .palette-2 { background: linear-gradient(180deg, #f2b0ff 0%, #ffb2c3 100%); } 
+    .palette-3 { background: linear-gradient(180deg, #ffd1a6 0%, #f0b6ff 100%); } 
+    .palette-4 { background: linear-gradient(180deg, #cbb7ff 0%, #97f1bb 100%); } 
+    .palette-5 { background: linear-gradient(180deg, #97f1bb 0%, #ffb2c3 100%); } 
+
+    .section-royal {
+      background: radial-gradient(900px 700px at 20% 15%, rgba(243, 200, 139, 0.18) 0%, rgba(243, 200, 139, 0) 60%),
+                  radial-gradient(900px 700px at 80% 10%, rgba(139, 92, 246, 0.22) 0%, rgba(139, 92, 246, 0) 58%),
+                  linear-gradient(180deg, var(--royal-1) 0%, var(--royal-2) 55%, var(--royal-3) 100%);
+      color: #fff;
+      background-size: 200% 200%;
+    }
+
+    /* Premium Heavy Translucent Glass */
+    .glass-slab {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .glass-royal {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+    }
+
+    .magical-bg {
+      background: linear-gradient(180deg, #13051c 0%, #2b0c35 30%, #4a1b52 50%, #2b0c35 70%, #0b0613 100%);
+      background-attachment: fixed;
+      position: relative;
+    }
+
+    .reveal-mask {
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Smooth Interactive Buttons */
+    .luxury-btn {
+      padding: 18px 45px;
+      border-radius: 999px;
+      border: 1px solid rgba(138, 79, 102, 0.25);
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #4a2834;
+    }
+
+    .luxury-btn:hover {
+      transform: translateY(-4px);
+      background: #ffffff;
+      box-shadow: 0 20px 40px rgba(138, 79, 102, 0.2);
+    }
+
+    /* Preloader Architectural Elements */
+    #preloader {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(1200px 900px at 20% 15%, rgba(139, 92, 246, 0.28) 0%, rgba(139, 92, 246, 0) 55%),
+                  radial-gradient(1200px 900px at 80% 10%, rgba(255, 77, 109, 0.20) 0%, rgba(255, 77, 109, 0) 60%),
+                  linear-gradient(135deg, #07030d 0%, #12031c 45%, #1a0430 100%);
+    }
+
+    #preloader::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(900px 700px at 50% 45%, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #preloader::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(closest-side, rgba(0,0,0,0) 62%, rgba(0,0,0,0.55) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .loader-bg-half {
+      position: absolute;
+      width: 50%;
+      height: 100%;
+      background: radial-gradient(900px 700px at 20% 20%, rgba(243, 200, 139, 0.18) 0%, rgba(243, 200, 139, 0) 60%),
+                  radial-gradient(900px 700px at 80% 10%, rgba(139, 92, 246, 0.22) 0%, rgba(139, 92, 246, 0) 58%),
+                  linear-gradient(135deg, #0b0413 0%, #1a0430 35%, #3b0a5d 70%, #14041f 100%);
+      z-index: 1;
+    }
+    .loader-left { left: 0; border-right: none; }
+    .loader-right { right: 0; }
+
+    .royal-frame {
+      position: relative;
+    }
+    .royal-frame::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border-radius: 48px;
+      pointer-events: none;
+    }
+    .royal-frame::after {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border-radius: 56px;
+      pointer-events: none;
+      mask: radial-gradient(closest-side, transparent 70%, #000 100%);
+    }
+
+    /* Remove frame boxes on the seal (preloader) page */
+    #preloader .royal-frame::before,
+    #preloader .royal-frame::after {
+      display: none;
+    }
+
+    .hero-dark {
+      background:
+        radial-gradient(1100px 700px at 15% 20%, rgba(139, 92, 246, 0.35) 0%, rgba(139, 92, 246, 0) 60%),
+        radial-gradient(1200px 800px at 85% 10%, rgba(255, 77, 109, 0.22) 0%, rgba(255, 77, 109, 0) 58%),
+        radial-gradient(1000px 800px at 55% 95%, rgba(43, 182, 115, 0.18) 0%, rgba(43, 182, 115, 0) 60%),
+        linear-gradient(180deg, #0b0613 0%, #13051c 50%, #1f0730 100%);
+      color: #fff;
+    }
+
+    /* Section Sizing & Backgrounds */
+    .hero-landing-bg, .timeline-landing-bg, .rituals-landing-bg, 
+    .mehendi-landing-bg, .haldi-landing-bg, .sangeet-landing-bg, 
+    .wedding-landing-bg, .reception-landing-bg, .venue-landing-bg, 
+    .rsvp-landing-bg {
+      height: 100svh;
+    }
+
+    .hero-landing-bg {
+      background: url('MEDIA/IMAGES/DESKTOP/HERO-D.png') center / cover no-repeat;
+    }
+    .rsvp-landing-bg {
+      background: url('MEDIA/IMAGES/DESKTOP/RSVP-D.png') center / cover no-repeat;
+    }
+    @media (max-width: 767px) {
+      .hero-landing-bg {
+        background: url('MEDIA/IMAGES/MOBILE/HERO-M.png') center / cover no-repeat;
+      }
+      .rsvp-landing-bg {
+        background: url('MEDIA/IMAGES/MOBILE/RSVP-M.png') center / cover no-repeat;
+      }
+    }
+
+    /* Timeline landing: responsive image background (desktop/mobile) */
+    .timeline-landing-bg {
+      background: url('MEDIA/IMAGES/DESKTOP/TIMELINE-D.png') center / cover no-repeat;
+    }
+    @media (max-width: 767px) {
+      .timeline-landing-bg {
+        background: url('MEDIA/IMAGES/MOBILE/TIMELINE-M.png') center / cover no-repeat;
+      }
+    }
+
+    /* Rituals landing: responsive image background */
+    .rituals-landing-bg {
+      background: url('MEDIA/IMAGES/DESKTOP/5day-D.png') center / cover no-repeat;
+    }
+    @media (max-width: 767px) {
+      .rituals-landing-bg {
+        background: url('MEDIA/IMAGES/MOBILE/5day-M.png') center / cover no-repeat;
+      }
+    }
+
+    /* Mehendi Ritual: responsive image background */
+    .mehendi-landing-bg {
+      background: url('MEDIA/IMAGES/DESKTOP/MEHENDI-D.png') center / cover no-repeat;
+    }
+    @media (max-width: 767px) {
+      .mehendi-landing-bg {
+        background: url('MEDIA/IMAGES/MOBILE/MEHENDI-M.png') center / cover no-repeat;
+      }
+    }
+
+    /* Haldi Ritual: responsive image background */
+    .haldi-landing-bg {
+      background: url('MEDIA/IMAGES/DESKTOP/HALDI-D.png') center / cover no-repeat;
+    }
+    @media (max-width: 767px) {
+      .haldi-landing-bg {
+        background: url('MEDIA/IMAGES/MOBILE/HALDI-M.png') center / cover no-repeat;
+      }
+    }
+
+    /* Sangeet Night: responsive image background */
+    .sangeet-landing-bg {
+      background: url('MEDIA/IMAGES/DESKTOP/SANGEET-D.png') center / cover no-repeat;
+    }
+    @media (max-width: 767px) {
+      .sangeet-landing-bg {
+        background: url('MEDIA/IMAGES/MOBILE/SANGEET-M.png') center / cover no-repeat;
+      }
+    }
+
+    /* Grand Wedding: responsive image background */
+    .wedding-landing-bg {
+      background: url('MEDIA/IMAGES/DESKTOP/WEDDING-D.png') center / cover no-repeat;
+    }
+    @media (max-width: 767px) {
+      .wedding-landing-bg {
+        background: url('MEDIA/IMAGES/MOBILE/WEDDING-M.png') center / cover no-repeat;
+      }
+    }
+
+    /* Venue Section: static image background */
+    .venue-landing-bg {
+      background: url('MEDIA/IMAGES/DESKTOP/VENUE-D.png') center / cover no-repeat;
+    }
+    @media (max-width: 767px) {
+      .venue-landing-bg {
+        background: url('MEDIA/IMAGES/MOBILE/VENUE-M.png') center / cover no-repeat;
+      }
+    }
+    .venue-landing-bg .glass-slab { background: rgba(255, 255, 255, 0.05) !important; }
+
+    /* Royal Reception: responsive image background */
+    .reception-landing-bg {
+      background: url('MEDIA/IMAGES/DESKTOP/RECEPTION-D.png') center / cover no-repeat;
+    }
+    @media (max-width: 767px) {
+      .reception-landing-bg {
+        background: url('MEDIA/IMAGES/MOBILE/RECEPTION-M.png') center / cover no-repeat;
+      }
+    }
+
+    /* Enable side movement for image backgrounds */
+    .hero-landing-bg, .timeline-landing-bg, .rituals-landing-bg, 
+    .mehendi-landing-bg, .haldi-landing-bg, .sangeet-landing-bg, 
+    .wedding-landing-bg, .reception-landing-bg, .venue-landing-bg,
+    .rsvp-landing-bg {
+      background-size: 130% 110% !important;
+    }
+    
+    .mehendi-landing-bg, .sangeet-landing-bg, .reception-landing-bg {
+      background-position: 0% 50%;
+    }
+
+    .timeline-landing-bg, .haldi-landing-bg, .wedding-landing-bg {
+      background-position: 100% 50%;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .scratch-card-surface {
+      background: transparent;
+      opacity: 1;
+      transition: background 0.8s ease, box-shadow 0.8s ease;
+      border-radius: 32px;
+      font-family: 'Cinzel Decorative', serif;
+    }
+    
+    .scratch-card-surface .reveal-text-item, 
+    .scratch-card-surface span, 
+    .scratch-card-surface p {
+      color: var(--gold) !important;
+      font-weight: 700 !important;
+      text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      left: 50%;
+      bottom: 26px;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 20;
+      user-select: none;
+    }
+    .scroll-indicator .mouse {
+      width: 26px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(243, 200, 139, 0.45);
+      background: rgba(255,255,255,0.06);
+      position: relative;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    }
+    .scroll-indicator .mouse::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 10px;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(243, 200, 139, 0.9);
+      animation: scrollDot 1.4s ease-in-out infinite;
+    }
+    @keyframes scrollDot {
+      0% { opacity: 0; transform: translate(-50%, -2px); }
+      25% { opacity: 1; }
+      100% { opacity: 0; transform: translate(-50%, 14px); }
+    }
+
+    .image-frame {
+      border-radius: 48px;
+      border: 1px solid rgba(243, 200, 139, 0.28);
+      box-shadow: 0 40px 120px rgba(0,0,0,0.35);
+      overflow: hidden;
+    }
+
+    .gallery-full {
+      height: 100svh;
+      width: 100%;
+      overflow: hidden;
+      margin-top: -1px;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      /* Remove inherited section blur */
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    .gallery-full img {
+      width: 85%;
+      height: 80%;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      filter: saturate(1.1) contrast(1.05);
+      box-shadow: 0 40px 120px rgba(0,0,0,0.6);
+      border-radius: 20px;
+    }
+
+    /* Gallery Editorial Slides (full-screen pinned panels) */
+    .gallery-editorial-bg {
+      background: radial-gradient(900px 700px at 20% 15%, rgba(243, 200, 139, 0.14) 0%, rgba(243, 200, 139, 0) 60%),
+                  radial-gradient(900px 700px at 80% 10%, rgba(139, 92, 246, 0.18) 0%, rgba(139, 92, 246, 0) 58%),
+                  linear-gradient(180deg, var(--royal-1) 0%, var(--royal-2) 55%, var(--royal-3) 100%);
+      color: #fff;
+    }
+
+    .gallery-editorial-slide {
+      height: 100svh;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gallery-slide-inner {
+      width: 100%;
+      max-width: none;
+      display: grid;
+      align-items: center;
+      gap: clamp(10px, 1.6vw, 18px);
+      /* Desktop: copy on the left, landscape media on the right */
+      grid-template-columns: 0.65fr 1.35fr;
+      grid-template-areas: "copy media";
+      padding: clamp(18px, 3vw, 54px);
+    }
+
+    .gallery-editorial-slide[data-side="right"] .gallery-slide-inner {
+      /* Alternate layout */
+      grid-template-columns: 1.35fr 0.65fr;
+      grid-template-areas: "media copy";
+    }
+
+    .gallery-media {
+      grid-area: media;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      height: auto;
+      max-height: min(88svh, 920px);
+    }
+    .gallery-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      filter: saturate(1.08) contrast(1.06);
+    }
+
+    .gallery-copy {
+      grid-area: copy;
+      padding: 22px 22px;
+      border-radius: 32px;
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 40px 120px rgba(0,0,0,0.55);
+      color: #fff;
+    }
+
+    .gallery-kicker {
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      font-weight: 700;
+    }
+
+    .gallery-title {
+      margin-top: 10px;
+      font-size: clamp(2.2rem, 4.2vw, 4.2rem);
+      color: var(--gold);
+      line-height: 0.95;
+    }
+
+    .gallery-line {
+      margin-top: 14px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.82);
+      letter-spacing: 0.02em;
+    }
+
+    .gallery-tag {
+      margin-top: 18px;
+      display: inline-flex;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(243, 200, 139, 0.35);
+      background: rgba(243, 200, 139, 0.10);
+      color: rgba(243, 200, 139, 0.95);
+      font-size: 10px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    @media (max-width: 767px) {
+      .gallery-slide-inner {
+        width: 100%;
+        height: 100%;
+        grid-template-columns: 1fr;
+        grid-template-areas: "media";
+        padding: 0;
+        gap: 0;
+      }
+
+      /* Override desktop "right side" split layout on mobile */
+      .gallery-editorial-slide[data-side="right"] .gallery-slide-inner {
+        grid-template-columns: 1fr;
+        grid-template-areas: "media";
+      }
+
+      .gallery-media {
+        position: absolute;
+        inset: 0;
+        height: 100%;
+        width: 100%;
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+      }
+
+      .gallery-media img {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        object-fit: cover;
+      }
+
+      /* Ensure every slide panel fully fills the viewport on mobile */
+      .gallery-editorial-slide { display: block; }
+      .gallery-slide-inner { position: absolute; inset: 0; }
+
+      /* Subtle overlay so text stays readable on any photo */
+      .gallery-editorial-slide::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 15;
+        background: linear-gradient(180deg, rgba(24, 7, 31, 0.55) 0%, rgba(24, 7, 31, 0.15) 40%, rgba(24, 7, 31, 0.55) 100%);
+        pointer-events: none;
+      }
+
+      .gallery-copy {
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        top: 16px;
+        z-index: 30;
+        padding: 16px 16px;
+        border-radius: 26px;
+      }
+
+      .gallery-title { font-size: 2.6rem; }
+      .gallery-line { font-size: 12px; }
+    }
+
+    /* Mobile alternating copy placement via data attribute */
+    @media (max-width: 767px) {
+      .gallery-editorial-slide[data-copy="bottom"] .gallery-copy {
+        top: auto;
+        bottom: 16px;
+      }
+    }
+
+    .wax-seal {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: radial-gradient(90px 90px at 30% 30%, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0) 55%),
+                  linear-gradient(135deg, #ff4d6d, #8b5cf6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 25px 50px rgba(255, 123, 144, 0.45);
+      border: 2px solid rgba(255,255,255,0.7);
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .wax-seal::after {
+      content: "";
+      position: absolute;
+      inset: 10px;
+      border-radius: 999px;
+      border: 1px dashed rgba(255,255,255,0.45);
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+
+    /* Preloader: no dashed oval lines */
+    #preloader .wax-seal::after {
+      display: none;
+    }
+
+    /* Interactive Reveal Card Container Styles */
+    .scratch-container {
+      position: relative;
+      width: 280px;
+      height: 180px;
+      margin: 0 auto;
+      cursor: pointer;
+    }
+    @media (min-width: 768px) {
+      .scratch-container {
+        width: 320px;
+        height: 200px;
+      }
+    }
+
+    .scratch-reveal-layer {
+      position: absolute;
+      inset: 0;
+      background: transparent;
+      border-radius: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s ease;
+    }
+
+    /* iOS/Apple viewport quirks */
+    .min-svh { min-height: 100svh; }
+    @supports (-webkit-touch-callout: none) {
+      .hero-gradient { min-height: 100svh; }
+    }
+
+    /* Ritual panels */
+    .ritual-panel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 56px;
+      border: 1px solid rgba(255,255,255,0.55);
+      box-shadow: 0 40px 120px rgba(24, 9, 18, 0.22);
+    }
+    .ritual-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(900px 500px at 10% 15%, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 55%),
+        radial-gradient(900px 500px at 90% 80%, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0) 60%);
+      pointer-events: none;
+    }
+    .ritual-media {
+      min-height: 240px;
+      border-radius: 44px;
+      background:
+        radial-gradient(500px 300px at 30% 30%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 60%),
+        linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
+      border: 1px dashed rgba(255,255,255,0.45);
+    }
+
+    /* Gallery panels */
+    .gallery-panel {
+      position: relative;
+      overflow: hidden;
+      border-radius: 56px;
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: 0 40px 120px rgba(24, 9, 18, 0.22);
+      background: rgba(255,255,255,0.14);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+    .gallery-panel img { width: 100%; height: 100%; object-fit: cover; }
+    @media (orientation: landscape) and (min-width: 768px) {
+      .gallery-panel { min-height: 88vh; }
+    }
+    @media (max-width: 767px) {
+      .gallery-panel { border-radius: 36px; }
+    }
+
+    /* Map widget */
+    .map-shell {
+      position: relative;
+      overflow: hidden;
+      border-radius: 44px;
+      border: 1px solid rgba(255,255,255,0.55);
+      box-shadow: 0 40px 120px rgba(24, 9, 18, 0.25);
+    }
+    .map-shell iframe { width: 100%; height: 280px; border: 0; display: block; }
+    @media (max-width: 767px) { .map-shell iframe { height: 200px; } }
+
+    /* Footer icons */
+    .contact-icon {
+      width: 46px;
+      height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(243, 200, 139, 0.28);
+      transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), background 0.4s ease, box-shadow 0.4s ease;
+    }
+    .contact-icon:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,0.18);
+      box-shadow: 0 18px 42px rgba(0,0,0,0.35);
+    }
+
+    /* Glass Slide Effect: Remove gaps between sections */
+    section {
+      margin-top: -1px;
+      position: relative;
+      z-index: 5;
+      backdrop-filter: blur(10px);
+      max-width: 100vw;
+      overflow-x: hidden;
+      border: none !important;
+    }
+    
+    /* Mobile Height Fixes to match Hero section */
+    @media (max-width: 767px) {
+      .hero-landing-bg, .timeline-landing-bg, .rituals-landing-bg, 
+      .mehendi-landing-bg, .haldi-landing-bg, .sangeet-landing-bg, 
+      .wedding-landing-bg, .reception-landing-bg, .venue-landing-bg,
+      .rsvp-landing-bg,
+      .section-royal-footer {
+        height: 100svh !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="preloader">
+    <div class="loader-bg-half loader-left"></div>
+    <div class="loader-bg-half loader-right"></div>
+    
+
+
+    <div class="absolute z-10 text-center flex flex-col items-center justify-center royal-frame">
+      <div id="sealButton" class="wax-seal group mb-8">
+        <span class="seal-monogram text-4xl text-white select-none pointer-events-none transform group-hover:scale-110 transition-transform duration-500">P&nbsp;&amp;&nbsp;V</span>
+      </div>
+      <div id="loaderText" class="px-6 relative z-10 max-w-[92vw]">
+        <p class="tracking-[0.35em] md:tracking-[0.45em] text-[10px] md:text-xs uppercase text-white/85 mb-2 font-semibold">Tap The Seal To Open Invitation</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="scroll-content">
+
+    <section class="hero-dark hero-gradient hero-landing-bg min-svh flex items-center justify-center text-center px-4 md:px-10 relative overflow-hidden">
+      <div id="heroBG" class="absolute inset-0 pointer-events-none">
+      </div>
+
+      <div class="relative z-10 max-w-6xl mx-auto space-y-6 w-full">
+        <div class="reveal-mask">
+          <p class="hero-reveal-line tracking-[0.55em] uppercase text-[10px] md:text-sm text-white/80 font-semibold">Together With Their Families</p>
+        </div>
+        
+        <div class="py-4 space-y-4">
+          <div class="reveal-mask">
+            <h1 class="hero-reveal-line hero-name embossed-name text-[clamp(2.8rem,8.6vw,9.2rem)] text-white leading-[0.95] tracking-[0.05em] px-2">Praveen Kumar P</h1>
+          </div>
+          <div class="reveal-mask">
+            <h2 class="hero-reveal-line text-4xl md:text-5xl font-light text-white/70">&</h2>
+          </div>
+          <div class="reveal-mask">
+            <h1 class="hero-reveal-line hero-name embossed-name text-[clamp(2.8rem,8.6vw,9.2rem)] text-[color:var(--gold)] leading-[0.95] tracking-[0.05em] px-2">Veena B</h1>
+          </div>
+        </div>
+
+        <div class="reveal-mask pt-6">
+          <p class="hero-reveal-line text-[11px] md:text-[12px] tracking-[0.55em] text-white/75 uppercase font-semibold">Zareqia Grand Pavilion</p>
+        </div>
+      </div>
+
+      <div class="scroll-indicator">
+        <div class="mouse"></div>
+        <div class="text-[10px] tracking-[0.45em] uppercase text-white/60 font-semibold">Scroll</div>
+      </div>
+    </section>
+
+    <section class="section-royal timeline-landing-bg min-svh px-6 md:px-16 py-24 md:py-28 flex items-center text-center relative overflow-hidden royal-frame">
+      <div class="max-w-3xl mx-auto space-y-12 relative z-10">
+        <div class="space-y-3">
+          <span class="calligraphy text-6xl md:text-7xl text-[color:var(--gold)] block">The Sacred Timeline</span>
+          <h2 class="text-4xl md:text-6xl font-light tracking-wide text-white">Unveil The Date</h2>
+          <p class="text-white/70 text-sm md:text-base tracking-[0.2em] uppercase">A royal invitation awaits</p>
+        </div>
+
+        <div class="scratch-container" id="scratchCard">
+          <div id="scratchSurface" class="scratch-card-surface absolute inset-0 flex flex-col items-center justify-center space-y-1 p-6">
+            <div class="reveal-text-item text-3xl md:text-4xl uppercase tracking-widest">June</div>
+            <div class="reveal-text-item text-3xl md:text-4xl uppercase tracking-widest">12 - 16</div>
+            <div class="reveal-text-item text-3xl md:text-4xl uppercase tracking-widest">2026</div>
+          </div>
+
+          <canvas id="scratchCanvas" class="absolute inset-0 rounded-3xl"></canvas>
+          <div class="scratch-reveal-layer" id="scratchOverlay" style="pointer-events:none">
+            <p class="text-white/90 tracking-[0.2em] text-xs font-bold uppercase">Scratch To Reveal Dates</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero-dark rituals-landing-bg min-svh px-6 md:px-16 py-24 flex items-center relative overflow-hidden royal-frame">
+      <div class="max-w-3xl mx-auto w-full text-center relative z-10">
+        <div class="glass-slab rounded-[44px] p-6 md:p-8 space-y-6 max-w-xl mx-auto">
+          <span class="calligraphy text-7xl md:text-8xl text-white block">The 5‑Day Rituals</span>
+          <h2 class="text-4xl md:text-6xl font-bold tracking-wide text-white">A Royal Celebration</h2>
+          <p class="text-[11px] md:text-xs tracking-[0.45em] uppercase text-white/80 font-bold">Scroll Through Each Day</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero-dark mehendi-landing-bg min-svh px-6 md:px-24 pt-[10svh] pb-8 md:py-24 flex items-start justify-center text-center md:items-center md:justify-start md:text-left relative overflow-hidden royal-frame">
+      <div class="max-w-2xl space-y-8 relative z-10 w-full">
+        <!-- Stylized Date Component -->
+        <div class="flex flex-col items-center md:items-start space-y-2">
+          <div class="flex items-baseline gap-3">
+            <span class="text-[10px] tracking-[0.5em] uppercase text-white/60 font-bold">Day</span>
+            <span class="text-5xl md:text-7xl font-bold text-[color:var(--gold)] leading-none">01</span>
+          </div>
+          <div class="w-32 h-px bg-gradient-to-r from-transparent via-[color:var(--gold)] to-transparent md:bg-gradient-to-r md:from-[color:var(--gold)] md:to-transparent opacity-50"></div>
+          <div class="text-[11px] md:text-xs tracking-[0.4em] uppercase text-white font-bold">Oct 13 • 5:00 PM</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="space-y-4">
+          <h3 class="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[0.9]">Mehendi Ceremony</h3>
+          <p class="text-white/90 text-base md:text-lg font-bold leading-relaxed capitalize max-w-md mx-auto md:ml-0 md:mr-auto">Emerald Tones, Intricate Henna Artistry, And A First Toast To Forever.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero-dark haldi-landing-bg min-svh px-6 md:px-24 pt-[10svh] pb-8 md:py-24 flex items-start justify-center text-center md:items-center md:justify-end md:text-right relative overflow-hidden royal-frame">
+      <div class="max-w-2xl space-y-8 relative z-10 w-full">
+        <!-- Stylized Date Component -->
+        <div class="flex flex-col items-center md:items-end space-y-2">
+          <div class="flex items-baseline gap-3">
+            <span class="text-[10px] tracking-[0.5em] uppercase text-white/60 font-bold">Day</span>
+            <span class="text-5xl md:text-7xl font-bold text-[color:var(--gold)] leading-none">02</span>
+          </div>
+          <div class="w-32 h-px bg-gradient-to-r from-transparent via-[color:var(--gold)] to-transparent md:bg-gradient-to-l md:from-[color:var(--gold)] md:to-transparent opacity-50"></div>
+          <div class="text-[11px] md:text-xs tracking-[0.4em] uppercase text-white font-bold">Oct 14 • 10:00 AM</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="space-y-4">
+          <h3 class="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[0.9]">The Haldi Ritual</h3>
+          <p class="text-white/90 text-base md:text-lg font-bold leading-relaxed capitalize max-w-md mx-auto md:ml-auto md:mr-0">Golden Blessings, Laughter, And The Warmest Light Of Tradition.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero-dark sangeet-landing-bg min-svh px-6 md:px-24 pt-[10svh] pb-8 md:py-24 flex items-start justify-center text-center md:items-center md:justify-start md:text-left relative overflow-hidden royal-frame">
+      <div class="max-w-2xl space-y-8 relative z-10 w-full">
+        <!-- Stylized Date Component -->
+        <div class="flex flex-col items-center md:items-start space-y-2">
+          <div class="flex items-baseline gap-3">
+            <span class="text-[10px] tracking-[0.5em] uppercase text-white/60 font-bold">Day</span>
+            <span class="text-5xl md:text-7xl font-bold text-[color:var(--gold)] leading-none">03</span>
+          </div>
+          <div class="w-32 h-px bg-gradient-to-r from-transparent via-[color:var(--gold)] to-transparent md:bg-gradient-to-r md:from-[color:var(--gold)] md:to-transparent opacity-50"></div>
+          <div class="text-[11px] md:text-xs tracking-[0.4em] uppercase text-white font-bold">Oct 15 • 7:00 PM</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="space-y-4">
+          <h3 class="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[0.9]">Sangeet Gala Night</h3>
+          <p class="text-white/90 text-base md:text-lg font-bold leading-relaxed capitalize max-w-md mx-auto md:ml-0 md:mr-auto">A Night Of Rhythm, Shimmer, And Stories Told In Dance.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero-dark wedding-landing-bg min-svh px-6 md:px-24 pt-[10svh] pb-8 md:py-24 flex items-start justify-center text-center md:items-center md:justify-end md:text-right relative overflow-hidden royal-frame">
+      <div class="max-w-2xl space-y-8 relative z-10 w-full">
+        <!-- Stylized Date Component -->
+        <div class="flex flex-col items-center md:items-end space-y-2">
+          <div class="flex items-baseline gap-3">
+            <span class="text-[10px] tracking-[0.5em] uppercase text-white/60 font-bold">Day</span>
+            <span class="text-5xl md:text-7xl font-bold text-[color:var(--gold)] leading-none">04</span>
+          </div>
+          <div class="w-32 h-px bg-gradient-to-r from-transparent via-[color:var(--gold)] to-transparent md:bg-gradient-to-l md:from-[color:var(--gold)] md:to-transparent opacity-50"></div>
+          <div class="text-[11px] md:text-xs tracking-[0.4em] uppercase text-white font-bold">Oct 16 • 4:30 PM</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="space-y-4">
+          <h3 class="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[0.9]">The Grand Wedding</h3>
+          <p class="text-white/90 text-base md:text-lg font-bold leading-relaxed capitalize max-w-md mx-auto md:ml-auto md:mr-0">Vows Beneath A Luminous Mandap—Pure, Sacred, Unforgettable.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero-dark reception-landing-bg min-svh px-6 md:px-24 pt-[10svh] pb-8 md:py-24 flex items-start justify-center text-center md:items-center md:justify-start md:text-left relative overflow-hidden royal-frame">
+      <div class="max-w-2xl space-y-8 relative z-10 w-full">
+        <!-- Stylized Date Component -->
+        <div class="flex flex-col items-center md:items-start space-y-2">
+          <div class="flex items-baseline gap-3">
+            <span class="text-[10px] tracking-[0.5em] uppercase text-white/60 font-bold">Day</span>
+            <span class="text-5xl md:text-7xl font-bold text-[color:var(--gold)] leading-none">05</span>
+          </div>
+          <div class="w-32 h-px bg-gradient-to-r from-transparent via-[color:var(--gold)] to-transparent md:bg-gradient-to-r md:from-[color:var(--gold)] md:to-transparent opacity-50"></div>
+          <div class="text-[11px] md:text-xs tracking-[0.4em] uppercase text-white font-bold">Oct 17 • 8:00 PM</div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="space-y-4">
+          <h3 class="text-5xl md:text-7xl font-bold text-white tracking-tight leading-[0.9]">Royal Reception</h3>
+          <p class="text-white/90 text-base md:text-lg font-bold leading-relaxed capitalize max-w-md mx-auto md:ml-0 md:mr-auto">A Luxe Finale—Music, Toasts, And A Forever That Begins Tonight.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-royal min-svh px-6 md:px-16 text-center relative overflow-hidden royal-frame flex items-center justify-center">
+      <div class="max-w-5xl mx-auto space-y-4 relative z-10">
+        <span class="calligraphy text-7xl md:text-8xl text-[color:var(--gold)] drop-shadow-[0_18px_60px_rgba(0,0,0,0.45)] block">Moments Captured</span>
+        <h2 class="text-4xl md:text-6xl font-light text-white/90 tracking-wide">Our Journey</h2>
+      </div>
+    </section>
+
+    <!-- Gallery: split editorial slides (each is its own full-screen pinned panel) -->
+    <section class="gallery-editorial-slide gallery-editorial-bg royal-frame" data-side="left" data-copy="top">
+      <div class="gallery-slide-inner relative z-20">
+        <div class="gallery-media image-frame">
+          <img src="MEDIA/IMAGES/GALLERY/G-1.png" alt="Gallery image 1">
+        </div>
+        <div class="gallery-copy glass-royal">
+          <div class="gallery-kicker">Chapter I</div>
+          <h2 class="gallery-title calligraphy">A little bit of magic</h2>
+          <p class="gallery-line">Stolen glances, soft smiles… and the kind of spark you can’t unsee.</p>
+          <div class="gallery-tag">Veena × Praveen</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="gallery-editorial-slide gallery-editorial-bg royal-frame" data-side="right" data-copy="bottom">
+      <div class="gallery-slide-inner relative z-20">
+        <div class="gallery-media image-frame">
+          <img src="MEDIA/IMAGES/GALLERY/G-2.png" alt="Gallery image 2">
+        </div>
+        <div class="gallery-copy glass-royal">
+          <div class="gallery-kicker">Chapter II</div>
+          <h2 class="gallery-title calligraphy">The flirtiest “forever”</h2>
+          <p class="gallery-line">If love had a signature move, this would be it—effortless and a little mischievous.</p>
+          <div class="gallery-tag">Save the date</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="gallery-editorial-slide gallery-editorial-bg royal-frame" data-side="left" data-copy="top">
+      <div class="gallery-slide-inner relative z-20">
+        <div class="gallery-media image-frame">
+          <img src="MEDIA/IMAGES/GALLERY/G-3.png" alt="Gallery image 3">
+        </div>
+        <div class="gallery-copy glass-royal">
+          <div class="gallery-kicker">Chapter III</div>
+          <h2 class="gallery-title calligraphy">Too cute to be casual</h2>
+          <p class="gallery-line">One look, two hearts, and suddenly we’re planning the rest of our lives.</p>
+          <div class="gallery-tag">See you there</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="gallery-editorial-slide gallery-editorial-bg royal-frame" data-side="right" data-copy="bottom">
+      <div class="gallery-slide-inner relative z-20">
+        <div class="gallery-media image-frame">
+          <img src="MEDIA/IMAGES/GALLERY/G-4.png" alt="Gallery image 4">
+        </div>
+        <div class="gallery-copy glass-royal">
+          <div class="gallery-kicker">Chapter IV</div>
+          <h2 class="gallery-title calligraphy">Meet us on the dancefloor</h2>
+          <p class="gallery-line">Bring your best moves—love is already doing its thing.</p>
+          <div class="gallery-tag">#VeenaAndPraveen2026</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero-dark venue-landing-bg min-svh flex items-center justify-center px-6 md:px-16 overflow-hidden relative" style="z-index: 20;">
+      <div class="max-w-[95%] md:max-w-2xl mx-auto text-center relative z-10">
+        <div class="glass-slab rounded-[40px] md:rounded-[44px] p-6 md:p-8 space-y-6 md:space-y-10">
+          <div class="space-y-4 md:space-y-6">
+            <span class="calligraphy text-5xl md:text-7xl text-white block">The Destination</span>
+            <h2 class="text-3xl md:text-6xl font-bold tracking-wide text-white">Zareqia Grand Pavilion</h2>
+          </div>
+          
+          <a class="luxury-btn seal-monogram inline-flex items-center gap-3 !bg-[#f3c88b] !text-[#2a1434] font-bold border-none shadow-xl hover:!bg-white transition-all"
+             target="_blank"
+             rel="noopener"
+             href="https://www.google.com/maps/dir/?api=1&destination=Zareqia%20Grand%20Pavilion%2C%201042%20Orchid%20Pastel%20Boulevard%2C%20Serenity%20Valley%2C%20India">
+            Get Directions
+          </a>
+        </div>
+      </div> 
+    </section>
+
+    <section class="hero-dark rsvp-landing-bg min-svh flex items-center justify-center md:justify-end px-6 md:px-32 py-12 overflow-hidden relative" style="z-index: 21;">
+      <div class="max-w-[85%] md:max-w-[280px] w-full text-center space-y-3 md:space-y-2 relative z-10 glass-royal p-4 md:p-5 rounded-[32px]">
+        <div class="space-y-1 md:space-y-0.5">
+          <span class="calligraphy text-5xl md:text-5xl text-[#f3c88b] block">RSVP</span>
+          <h2 class="text-xl md:text-xl font-light text-white tracking-wide">Share Your Presence</h2>
+          <p class="text-[8px] md:text-[10px] tracking-[0.4em] uppercase text-white/80 font-bold">A quick note helps us welcome you perfectly</p>
+        </div>
+
+        <form action="https://formspree.io/f/yourFormID" method="POST" class="space-y-3 md:space-y-2 text-center">
+          <input type="hidden" name="_subject" value="Wedding RSVP — Veena & Praveen" />
+
+          <div class="space-y-1 text-center">
+            <label class="text-[10px] uppercase tracking-[0.3em] text-white font-bold block">Full Name</label>
+            <input name="name" type="text" placeholder="Your Name" required class="w-full bg-white/5 border-b border-white/20 p-2 md:p-2 outline-none text-white placeholder:text-white/30 font-['Cormorant_Garamond'] text-lg md:text-sm focus:border-[#f3c88b] transition-all text-center">
+          </div>
+          
+          <div class="space-y-1 text-center">
+            <label class="text-[10px] uppercase tracking-[0.3em] text-white font-bold block">Phone Number</label>
+            <input name="phone" type="tel" placeholder="Phone Number" required class="w-full bg-white/5 border-b border-white/20 p-2 md:p-2 outline-none text-white placeholder:text-white/30 font-['Cormorant_Garamond'] text-lg md:text-sm focus:border-[#f3c88b] transition-all text-center">
+          </div>
+
+          <div class="space-y-1 text-center">
+            <label class="text-[10px] uppercase tracking-[0.3em] text-white font-bold block">Attendance Status</label>
+            <select name="attendance" class="w-full bg-white/5 border-b border-white/20 p-2 md:p-2 outline-none text-white font-['Cormorant_Garamond'] text-lg md:text-sm appearance-none text-center cursor-pointer focus:border-[#f3c88b] transition-all">
+              <option value="Joyfully Accept">Joyfully Accept</option>
+              <option value="Regretfully Decline">Regretfully Decline</option>
+            </select>
+          </div>
+
+          <div class="space-y-1 text-center">
+            <label class="text-[10px] uppercase tracking-[0.3em] text-white font-bold block">Warm Wishes</label>
+            <textarea name="message" placeholder="Your Blessings..." class="w-full bg-white/5 border-b border-white/20 p-2 md:p-2 h-20 md:h-14 outline-none text-white placeholder:text-white/30 font-['Cormorant_Garamond'] text-lg md:text-sm focus:border-[#f3c88b] transition-all text-center resize-none"></textarea>
+          </div>
+
+          <button type="submit" class="luxury-btn w-full py-3 md:py-2.5 text-[10px] font-semibold tracking-[0.25em] !bg-[#f3c88b] !text-[#2a1434] hover:!bg-white border-none mt-1 shadow-xl">Confirm Response</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="section-royal section-royal-footer h-[100svh] relative overflow-hidden flex flex-col items-stretch royal-frame magical-bg" style="z-index: 22;">
+      <div class="absolute inset-0 opacity-50 pointer-events-none">
+        <div class="absolute inset-0 bg-[radial-gradient(700px_500px_at_20%_30%,rgba(243,200,139,0.22),rgba(243,200,139,0)_60%)]"></div>
+      </div>
+      
+      <!-- Top Half: Thank You -->
+      <div class="h-1/2 flex flex-col justify-center items-center py-10 px-4 text-center border-b border-white/10 relative z-10">
+        <h2 class="calligraphy text-6xl md:text-8xl text-[color:var(--gold)] leading-none">Thank You</h2>
+        <p class="text-[12px] md:text-base tracking-[0.1em] md:tracking-[0.2em] uppercase text-white/80 font-semibold mt-4">With Love, Veena & Praveen</p>
+        <div class="text-[8px] md:text-xs tracking-[0.2em] md:tracking-[0.4em] text-white/60 uppercase mt-6">#VeenaAndPraveen2026</div>
+      </div>
+
+      <!-- Bottom Half: Footer -->
+      <div class="h-1/2 flex flex-col justify-center items-center py-10 px-4 text-center relative z-10 space-y-4 md:space-y-6">
+        <div class="space-y-2 md:space-y-3">
+          <div class="text-[11px] md:text-[11px] tracking-[0.2em] uppercase text-white/70 font-semibold">Creations By Raaya</div>
+          <div class="flex items-center justify-center">
+            <div class="wax-seal !w-[64px] !h-[64px] md:!w-[84px] md:!h-[84px] !shadow-none !cursor-default relative">
+              <span class="seal-monogram text-lg md:text-xl text-white">R</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-center gap-3 md:gap-4">
+          <a class="contact-icon !w-10 !h-10 md:!w-11 md:!h-11" href="tel:+910000000000" aria-label="Phone">
+            <svg class="w-3.5 h-3.5 md:w-5 md:h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+          </a>
+          <a class="contact-icon !w-10 !h-10 md:!w-11 md:!h-11" href="https://wa.me/910000000000" target="_blank" rel="noopener" aria-label="WhatsApp">
+            <svg class="w-3.5 h-3.5 md:w-5 md:h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.81 9.81 0 0012.04 2zm.01 18.11c-1.57 0-3.11-.42-4.46-1.21l-.32-.19-3.3.87.88-3.22-.21-.33c-.86-1.37-1.32-2.95-1.32-4.59 0-4.78 3.88-8.66 8.66-8.66 2.32 0 4.5.9 6.13 2.53 1.63 1.63 2.53 3.82 2.53 6.13 0 4.79-3.89 8.67-8.66 8.67zm4.75-6.51c-.26-.13-1.54-.76-1.78-.85-.24-.09-.41-.13-.58.13-.17.26-.67.85-.82 1.02-.15.17-.31.2-.57.07-.26-.13-1.1-.41-2.09-1.3-.77-.69-1.29-1.54-1.44-1.8-.15-.26-.02-.4.12-.53.12-.11.26-.31.4-.46.13-.15.17-.26.26-.43.09-.17.04-.32-.02-.45-.06-.13-.58-1.4-.79-1.92-.21-.5-.42-.43-.58-.44-.15-.01-.32-.01-.5-.01-.17 0-.45.06-.68.32-.24.26-.91.89-.91 2.16 0 1.27.93 2.51 1.06 2.68.13.17 1.83 2.79 4.43 3.92.62.27 1.1.43 1.48.55.62.2 1.19.17 1.63.1.5-.07 1.54-.63 1.76-1.24.22-.61.22-1.13.15-1.24-.07-.11-.26-.18-.51-.31z"/></svg>
+          </a>
+          <a class="contact-icon !w-10 !h-10 md:!w-11 md:!h-11" href="https://instagram.com/creationsbyraaya" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg class="w-3.5 h-3.5 md:w-5 md:h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.332 3.608 1.308.975.975 1.245 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.063 1.366-.333 2.633-1.308 3.608-.975.975-2.242 1.245-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.063-2.633-.333-3.608-1.308-.975-.975-1.245-2.242-1.308-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.332-2.633 1.308-3.608.975-.975 2.242-1.245 3.608-1.308 1.266-.058 1.646-.07 4.85-.07zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.355 2.618 6.778 6.98 6.978 1.28.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.058-1.28.072-1.689.072-4.948 0-3.259-.014-3.668-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          </a>
+          <a class="contact-icon !w-10 !h-10 md:!w-11 md:!h-11" href="mailto:hello@creationsbyraaya.com" aria-label="Email">
+            <svg class="w-3.5 h-3.5 md:w-5 md:h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </a>
+        </div>
+        <div class="text-[10px] md:text-[10px] tracking-[0.2em] uppercase text-white/40">Luxury wedding web invite</div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 1. Kinetic Smooth Scroll Configuration via Lenis
+    const lenis = new Lenis({
+      duration: 1.4,
+      smoothWheel: true,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+    });
+
+    // Keep ScrollTrigger in sync with Lenis
+    lenis.on('scroll', () => ScrollTrigger.update());
+
+    // Prevent background scroll during the curtain / preloader
+    lenis.stop();
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    document.body.style.overflow = 'hidden';
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // 2. Preloader Split Opening Assembly Sequence
+    const sealButton = document.getElementById('sealButton');
+    
+    sealButton.addEventListener('click', () => {
+      const preloaderTimeline = gsap.timeline({
+        onComplete: () => {
+          document.getElementById('preloader').style.display = 'none';
+          document.body.style.overflow = '';
+          window.scrollTo(0, 0);
+          lenis.scrollTo(0, { immediate: true });
+          lenis.start();
+          triggerHeroAnimations();
+          // Init scratch after preloader so canvas sizes correctly
+          setupScratch();
+          if (!window.__stackPanelsInit) {
+            window.__stackPanelsInit = true;
+            initStackedPanels();
+          }
+          ScrollTrigger.refresh(true);
+        }
+      });
+
+      preloaderTimeline.to('#loaderText', {
+        opacity: 0,
+        y: -30,
+        duration: 0.5,
+        ease: 'power2.in'
+      })
+      .to('.loader-left', { xPercent: -100, duration: 1.2, ease: 'power4.inOut' }, '-=0.2')
+      .to('.loader-right', { xPercent: 100, duration: 1.2, ease: 'power4.inOut' }, '-=1.2')
+      .to('#sealButton', { scale: 0, opacity: 0, duration: 0.8, ease: 'power3.in' }, '-=1.2');
+    });
+
+    // 3. Hero Entrance Animations Execution
+    gsap.set('.hero-reveal-line', { yPercent: 100 });
+    
+    function triggerHeroAnimations() {
+      gsap.to('.hero-reveal-line', {
+        yPercent: 0,
+        duration: 1.4,
+        stagger: 0.15,
+        ease: 'power4.out'
+      });
+
+      // Left to Right (Looping): Landing
+      gsap.to('.hero-landing-bg, .hero-gradient', {
+        backgroundPosition: '100% 50%',
+        duration: 10,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut'
+      });
+
+      // Right to Left (Looping): Timeline
+      gsap.to('.timeline-landing-bg', {
+        backgroundPosition: '0% 50%',
+        duration: 10,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut'
+      });
+
+      // Ritual Day Animations (Scroll and Stop)
+      const isMobile = window.innerWidth < 768;
+      const ritualAnimations = [
+        { class: '.mehendi-landing-bg', desktopTarget: '100% 50%' },   // R-L (Starts 0)
+        { class: '.haldi-landing-bg', desktopTarget: '0% 50%' },      // L-R (Starts 100)
+        { class: '.sangeet-landing-bg', desktopTarget: '100% 50%' },   // R-L (Starts 0)
+        { class: '.wedding-landing-bg', desktopTarget: '0% 50%' },    // L-R (Starts 100)
+        { class: '.reception-landing-bg', desktopTarget: '100% 50%' }  // R-L (Starts 0)
+      ];
+
+      ritualAnimations.forEach(ritual => {
+        gsap.to(ritual.class, {
+          backgroundPosition: isMobile ? '50% 50%' : ritual.desktopTarget,
+          duration: 8,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: ritual.class, start: 'top 95%', once: true }
+        });
+      });
+    }
+
+    // 4. Scratch-to-Reveal (canvas scratch)
+    const scratchCard = document.getElementById('scratchCard');
+    const scratchOverlay = document.getElementById('scratchOverlay');
+    const scratchCanvas = document.getElementById('scratchCanvas');
+    let isDown = false;
+    let lastPoint = null;
+    let scratchCount = 0;
+    let scratched = false;
+
+    const onUp = () => { isDown = false; lastPoint = null; if(window.revealIfEnough) window.revealIfEnough(); };
+    // Bind window listeners once to avoid duplication
+    window.addEventListener('mouseup', onUp);
+    window.addEventListener('touchend', onUp);
+
+    function setupScratch() {
+      if (!scratchCard || !scratchOverlay || !scratchCanvas) return;
+      const ctx = scratchCanvas.getContext('2d');
+      if (!ctx) return;
+
+      const DPR = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+      const rect = scratchCard.getBoundingClientRect();
+      const width = Math.max(1, Math.floor(rect.width));
+      const height = Math.max(1, Math.floor(rect.height));
+
+      scratchCanvas.width = Math.floor(width * DPR);
+      scratchCanvas.height = Math.floor(height * DPR);
+      scratchCanvas.style.width = `${width}px`;
+      scratchCanvas.style.height = `${height}px`;
+
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      ctx.globalCompositeOperation = 'source-over';
+
+      scratchCanvas.style.touchAction = 'none';
+
+      // Luxury Gold scratch layer
+      ctx.fillStyle = '#f3c88b';
+      ctx.fillRect(0, 0, width, height);
+
+      // Subtle luxury texture
+      ctx.fillStyle = '#e2b36b';
+      for (let i = 0; i < 80; i++) {
+        ctx.beginPath();
+        ctx.arc(Math.random() * width, Math.random() * height, 1.2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.lineWidth = 45;
+      ctx.strokeStyle = '#000'; // Value doesn't matter for destination-out, but must be set
+
+      function getPoint(e) {
+        const r = scratchCanvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return { x: clientX - r.left, y: clientY - r.top };
+      }
+
+      window.scratchAt = function(x, y) {
+        scratched = true;
+        scratchCount++;
+        if (lastPoint) {
+          ctx.beginPath();
+          ctx.moveTo(lastPoint.x, lastPoint.y);
+          ctx.lineTo(x, y);
+          ctx.stroke();
+        } else { // Draw a circle for the very first point
+          ctx.beginPath();
+          ctx.arc(x, y, 22.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        lastPoint = { x, y };
+      };
+
+      window.revealIfEnough = function() {
+        // Require a minimum amount of scratching to prevent accidental reveal on mobile taps
+        if (!scratched || scratchCount < 30) return;
+        // Physical dimensions must be used for getImageData to work on all screens
+        const physWidth = scratchCanvas.width;
+        const physHeight = scratchCanvas.height;
+        const sample = ctx.getImageData(0, 0, physWidth, physHeight).data;
+        let transparent = 0;
+        for (let i = 3; i < sample.length; i += 32) {
+          if (sample[i] === 0) transparent++;
+        }
+        const ratio = transparent / (sample.length / 32);
+        if (ratio > 0.35) {
+          gsap.to([scratchOverlay, scratchCanvas], { 
+            opacity: 0, 
+            duration: 0.6, 
+            ease: 'power2.out',
+            onComplete: () => {
+              scratchOverlay.style.display = 'none';
+              scratchCanvas.style.display = 'none';
+            }
+          });
+          gsap.to('#scratchSurface', { background: 'transparent', boxShadow: 'none', duration: 0.8 });
+          scratchCanvas.style.pointerEvents = 'none';
+        }
+      };
+
+      scratchCanvas.style.pointerEvents = 'auto';
+
+      const onDown = (e) => { 
+        isDown = true; 
+        const p = getPoint(e);
+        window.scratchAt(p.x, p.y); 
+        gsap.to('#scratchOverlay', { 
+          opacity: 0, 
+          duration: 0.4,
+          onComplete: () => { scratchOverlay.style.display = 'none'; }
+        });
+        e.preventDefault(); 
+      };
+      const onMove = (e) => { 
+        if (!isDown) return; 
+        const p = getPoint(e); 
+        window.scratchAt(p.x, p.y); 
+        e.preventDefault(); 
+      };
+
+      scratchCanvas.addEventListener('mousedown', onDown);
+      scratchCanvas.addEventListener('mousemove', onMove);
+
+      scratchCanvas.addEventListener('touchstart', onDown, { passive: false });
+      scratchCanvas.addEventListener('touchmove', onMove, { passive: false });
+
+      // quick fallback for keyboard / click
+      scratchCard.addEventListener('dblclick', () => {
+        gsap.to([scratchOverlay, scratchCanvas], { opacity: 0, duration: 0.45, ease: 'power2.out' });
+        scratchCanvas.style.pointerEvents = 'none';
+      });
+    }
+
+    // setupScratch() is called after the preloader opens
+
+    let lastWidth = window.innerWidth;
+    window.addEventListener('resize', () => {
+      // Only re-init if the width changes (avoids resetting canvas when mobile URL bar hides/shows)
+      if (window.innerWidth === lastWidth) return;
+      lastWidth = window.innerWidth;
+      
+      const canvas = document.getElementById('scratchCanvas');
+      if (canvas && canvas.parentElement) {
+        const fresh = canvas.cloneNode(true);
+        canvas.parentElement.replaceChild(fresh, canvas);
+        setupScratch();
+      }
+    });
+
+    // 5. Scroll-Linked "Glass Butter" Parallax Scrubbing Elements
+    gsap.to('#heroBG', {
+      yPercent: 25,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero-gradient',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true
+      }
+    });
+
+    // 5. Subtle parallax for full-bleed media
+    gsap.utils.toArray('[data-reveal=\"media\"]').forEach((img) => {
+      gsap.fromTo(img,
+        { yPercent: -4, scale: 1.06 },
+        {
+          yPercent: 4,
+          scale: 1.0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: img.parentElement,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: true
+          }
+        }
+      );
+    });
+
+    // 6. Master "Stacked Panels" scroll system (fixed section, next reveals over it)
+    // Applies from Hero onward and keeps the scroll feeling tight/premium.
+    // Excludes gallery-full (handled by gallery stack timeline below).
+    function initStackedPanels() {
+      const panels = gsap.utils.toArray('#scroll-content > section');
+
+      panels.forEach((panel, i) => {
+        // Keep later panels above earlier ones while stacking
+        gsap.set(panel, { position: 'relative', zIndex: 100 + i, willChange: 'transform, filter, clip-path' });
+
+        // Each panel pins at the top; next panel scrolls over it.
+        ScrollTrigger.create({
+          trigger: panel,
+          start: 'top top',
+          pin: true,
+          pinSpacing: false,
+          anticipatePin: 1,
+          invalidateOnRefresh: true
+        });
+
+        // Optional subtle "curtain + lift" entrance as the panel approaches the top.
+        const isMobile = () => window.innerWidth < 768;
+        const fromVars = () =>
+          isMobile()
+            ? { clipPath: 'inset(10% 6% 10% 6% round 44px)', opacity: 0.92, filter: 'blur(6px)', y: 16, scale: 0.992 }
+            : { clipPath: 'inset(12% 9% 12% 9% round 72px)', opacity: 0.9, filter: 'blur(8px)', y: 22, scale: 0.988 };
+
+        gsap.fromTo(
+          panel,
+          fromVars(),
+          {
+            clipPath: 'inset(0% 0% 0% 0% round 0px)',
+            opacity: 1,
+            filter: 'blur(0px)',
+            y: 0,
+            scale: 1,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: panel,
+              start: 'top 92%',
+              end: 'top 55%',
+              scrub: 0.8,
+              invalidateOnRefresh: true
+            }
+          }
+        );
+      });
+    }
+
+    // Make sure all ScrollTriggers calculate after everything is laid out.
+    // (Pinned gallery + fonts/images can affect final section start positions)
+    window.addEventListener('load', () => ScrollTrigger.refresh());
+
+    // 7. (Gallery dust removed) Gallery slides now participate in the main stacked-panels system.
+  </script>
+</body>
+</html>

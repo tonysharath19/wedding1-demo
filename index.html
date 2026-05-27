@@ -235,7 +235,7 @@
     .hero-landing-bg, .timeline-landing-bg, .rituals-landing-bg, 
     .mehendi-landing-bg, .haldi-landing-bg, .sangeet-landing-bg, 
     .wedding-landing-bg, .reception-landing-bg, .venue-landing-bg, 
-    .rsvp-landing-bg {
+    .rsvp-landing-bg, .moments-landing-bg {
       height: 100svh;
     }
 
@@ -245,6 +245,12 @@
     .rsvp-landing-bg {
       background: url('MEDIA/IMAGES/DESKTOP/RSVP-D.png') center / cover no-repeat;
     }
+    .moments-landing-bg {
+      background: url('MEDIA/IMAGES/DESKTOP/MEMORIES-D.png') center / cover no-repeat;
+    }
+    .timeline-landing-bg {
+      background: url('MEDIA/IMAGES/DESKTOP/TIMELINE-D.png') center / cover no-repeat;
+    }
     @media (max-width: 767px) {
       .hero-landing-bg {
         background: url('MEDIA/IMAGES/MOBILE/HERO-M.png') center / cover no-repeat;
@@ -252,13 +258,9 @@
       .rsvp-landing-bg {
         background: url('MEDIA/IMAGES/MOBILE/RSVP-M.png') center / cover no-repeat;
       }
-    }
-
-    /* Timeline landing: responsive image background (desktop/mobile) */
-    .timeline-landing-bg {
-      background: url('MEDIA/IMAGES/DESKTOP/TIMELINE-D.png') center / cover no-repeat;
-    }
-    @media (max-width: 767px) {
+      .moments-landing-bg {
+        background: url('MEDIA/IMAGES/MOBILE/MEMORIES-M.png') center / cover no-repeat;
+      }
       .timeline-landing-bg {
         background: url('MEDIA/IMAGES/MOBILE/TIMELINE-M.png') center / cover no-repeat;
       }
@@ -339,11 +341,11 @@
     .hero-landing-bg, .timeline-landing-bg, .rituals-landing-bg, 
     .mehendi-landing-bg, .haldi-landing-bg, .sangeet-landing-bg, 
     .wedding-landing-bg, .reception-landing-bg, .venue-landing-bg,
-    .rsvp-landing-bg {
+    .rsvp-landing-bg, .moments-landing-bg {
       background-size: 130% 110% !important;
     }
     
-    .mehendi-landing-bg, .sangeet-landing-bg, .reception-landing-bg {
+    .mehendi-landing-bg, .sangeet-landing-bg, .reception-landing-bg, .moments-landing-bg {
       background-position: 0% 50%;
     }
 
@@ -447,10 +449,23 @@
 
     /* Gallery Editorial Slides (full-screen pinned panels) */
     .gallery-editorial-bg {
-      background: radial-gradient(900px 700px at 20% 15%, rgba(243, 200, 139, 0.14) 0%, rgba(243, 200, 139, 0) 60%),
-                  radial-gradient(900px 700px at 80% 10%, rgba(139, 92, 246, 0.18) 0%, rgba(139, 92, 246, 0) 58%),
-                  linear-gradient(180deg, var(--royal-1) 0%, var(--royal-2) 55%, var(--royal-3) 100%);
+      background: url('MEDIA/IMAGES/DESKTOP/MEMORIES-D.png') center / cover no-repeat;
       color: #fff;
+    }
+    @media (max-width: 767px) {
+      .gallery-editorial-bg {
+        background: url('MEDIA/IMAGES/MOBILE/MEMORIES-M.png') center / cover no-repeat;
+      }
+    }
+
+    /* Mobile: smooth one-swipe section landing */
+    @media (max-width: 767px) {
+      html { scroll-behavior: smooth; }
+      body { scroll-snap-type: y proximity; overscroll-behavior-y: contain; }
+      section { scroll-snap-align: start; }
+    }
+    @media (max-width: 767px) and (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
     }
 
     .gallery-editorial-slide {
@@ -464,21 +479,31 @@
     }
 
     .gallery-slide-inner {
-      width: min(1100px, 92vw);
+      width: 100%;
+      max-width: none;
       display: grid;
       align-items: center;
-      gap: clamp(18px, 3vw, 44px);
-      grid-template-columns: 1.15fr 0.85fr;
-      grid-template-areas: "media copy";
-      padding: clamp(18px, 4vw, 56px);
+      gap: clamp(10px, 1.6vw, 18px);
+      /* Desktop: copy on the left, landscape media on the right */
+      grid-template-columns: 0.65fr 1.35fr;
+      grid-template-areas: "copy media";
+      padding: clamp(18px, 3vw, 54px);
     }
 
     .gallery-editorial-slide[data-side="right"] .gallery-slide-inner {
-      grid-template-columns: 0.85fr 1.15fr;
-      grid-template-areas: "copy media";
+      /* Alternate layout */
+      grid-template-columns: 1.35fr 0.65fr;
+      grid-template-areas: "media copy";
     }
 
-    .gallery-media { grid-area: media; height: min(78svh, 720px); }
+    .gallery-media {
+      grid-area: media;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      height: auto;
+      max-height: min(88svh, 920px);
+    }
+    .gallery-media picture { display: block; width: 100%; height: 100%; }
     .gallery-media img {
       width: 100%;
       height: 100%;
@@ -493,6 +518,8 @@
       padding: 22px 22px;
       border-radius: 32px;
       border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       box-shadow: 0 40px 120px rgba(0,0,0,0.55);
       color: #fff;
     }
@@ -534,42 +561,47 @@
       font-weight: 800;
     }
 
+    .gallery-editorial-slide .gallery-media,
+    .gallery-editorial-slide .gallery-copy {
+      border: 2px solid var(--gold) !important;
+    }
+
     @media (max-width: 767px) {
       .gallery-slide-inner {
         width: 100%;
         height: 100%;
-        grid-template-columns: 1fr;
-        grid-template-areas: "media";
-        padding: 0;
-        gap: 0;
+        display: flex;
+        flex-direction: column;
+        padding: 10px 10px 14px;
+        gap: 12px;
       }
 
       /* Override desktop "right side" split layout on mobile */
       .gallery-editorial-slide[data-side="right"] .gallery-slide-inner {
-        grid-template-columns: 1fr;
-        grid-template-areas: "media";
+        display: flex;
+        flex-direction: column;
       }
 
       .gallery-media {
-        position: absolute;
-        inset: 0;
-        height: 100%;
+        position: relative;
+        inset: auto;
         width: 100%;
-        border-radius: 0;
-        border: none;
-        box-shadow: none;
+        aspect-ratio: 3 / 4;
+        height: min(58svh, 560px);
+        flex: 1 1 auto;
+        min-height: 44svh;
       }
 
       .gallery-media img {
         width: 100%;
         height: 100%;
-        border-radius: 0;
+        border-radius: 28px;
         object-fit: cover;
       }
 
       /* Ensure every slide panel fully fills the viewport on mobile */
       .gallery-editorial-slide { display: block; }
-      .gallery-slide-inner { position: absolute; inset: 0; }
+      .gallery-slide-inner { position: relative; inset: auto; }
 
       /* Subtle overlay so text stays readable on any photo */
       .gallery-editorial-slide::after {
@@ -582,25 +614,37 @@
       }
 
       .gallery-copy {
-        position: absolute;
-        left: 14px;
-        right: 14px;
-        top: 16px;
+        position: relative;
+        left: auto;
+        right: auto;
+        top: auto;
         z-index: 30;
-        padding: 16px 16px;
+        padding: 14px 14px;
         border-radius: 26px;
+        margin: 0;
       }
 
-      .gallery-title { font-size: 2.6rem; }
-      .gallery-line { font-size: 12px; }
+      .gallery-kicker { font-size: 9px; letter-spacing: 0.32em; }
+      .gallery-title { font-size: 2.05rem; }
+      .gallery-line { font-size: 12px; margin-top: 10px; }
+      .gallery-tag { font-size: 9px; padding: 8px 12px; }
     }
 
     /* Mobile alternating copy placement via data attribute */
     @media (max-width: 767px) {
       .gallery-editorial-slide[data-copy="bottom"] .gallery-copy {
-        top: auto;
-        bottom: 16px;
+        margin-top: 0;
       }
+    }
+
+    /* Mobile: alternate layouts to mimic desktop rhythm */
+    @media (max-width: 767px) {
+      /* Alternate order only (text-first vs image-first) */
+      .gallery-editorial-slide[data-copy="top"] .gallery-copy { order: 1; }
+      .gallery-editorial-slide[data-copy="top"] .gallery-media { order: 2; }
+
+      .gallery-editorial-slide[data-copy="bottom"] .gallery-media { order: 1; }
+      .gallery-editorial-slide[data-copy="bottom"] .gallery-copy { order: 2; }
     }
 
     .wax-seal {
@@ -759,6 +803,7 @@
       .mehendi-landing-bg, .haldi-landing-bg, .sangeet-landing-bg, 
       .wedding-landing-bg, .reception-landing-bg, .venue-landing-bg,
       .rsvp-landing-bg,
+      .moments-landing-bg,
       .section-royal-footer {
         height: 100svh !important;
       }
@@ -950,7 +995,7 @@
       </div>
     </section>
 
-    <section class="section-royal min-svh px-6 md:px-16 text-center relative overflow-hidden royal-frame flex items-center justify-center">
+    <section class="section-royal moments-landing-bg min-svh px-6 md:px-16 text-center relative overflow-hidden royal-frame flex items-center justify-center">
       <div class="max-w-5xl mx-auto space-y-4 relative z-10">
         <span class="calligraphy text-7xl md:text-8xl text-[color:var(--gold)] drop-shadow-[0_18px_60px_rgba(0,0,0,0.45)] block">Moments Captured</span>
         <h2 class="text-4xl md:text-6xl font-light text-white/90 tracking-wide">Our Journey</h2>
@@ -961,7 +1006,10 @@
     <section class="gallery-editorial-slide gallery-editorial-bg royal-frame" data-side="left" data-copy="top">
       <div class="gallery-slide-inner relative z-20">
         <div class="gallery-media image-frame">
-          <img src="MEDIA/IMAGES/GALLERY/G-1.png" alt="Gallery image 1">
+          <picture>
+            <source media="(max-width: 767px)" srcset="MEDIA/IMAGES/MOBILE/GALLERY/G1-M.png">
+            <img src="MEDIA/IMAGES/DESKTOP/GALLERY/G1-D.png" alt="Gallery image 1">
+          </picture>
         </div>
         <div class="gallery-copy glass-royal">
           <div class="gallery-kicker">Chapter I</div>
@@ -975,7 +1023,10 @@
     <section class="gallery-editorial-slide gallery-editorial-bg royal-frame" data-side="right" data-copy="bottom">
       <div class="gallery-slide-inner relative z-20">
         <div class="gallery-media image-frame">
-          <img src="MEDIA/IMAGES/GALLERY/G-2.png" alt="Gallery image 2">
+          <picture>
+            <source media="(max-width: 767px)" srcset="MEDIA/IMAGES/MOBILE/GALLERY/G2-M.png">
+            <img src="MEDIA/IMAGES/DESKTOP/GALLERY/G2-D.png" alt="Gallery image 2">
+          </picture>
         </div>
         <div class="gallery-copy glass-royal">
           <div class="gallery-kicker">Chapter II</div>
@@ -989,7 +1040,10 @@
     <section class="gallery-editorial-slide gallery-editorial-bg royal-frame" data-side="left" data-copy="top">
       <div class="gallery-slide-inner relative z-20">
         <div class="gallery-media image-frame">
-          <img src="MEDIA/IMAGES/GALLERY/G-3.png" alt="Gallery image 3">
+          <picture>
+            <source media="(max-width: 767px)" srcset="MEDIA/IMAGES/MOBILE/GALLERY/G3-M.png">
+            <img src="MEDIA/IMAGES/DESKTOP/GALLERY/G3-D.png" alt="Gallery image 3">
+          </picture>
         </div>
         <div class="gallery-copy glass-royal">
           <div class="gallery-kicker">Chapter III</div>
@@ -1003,7 +1057,10 @@
     <section class="gallery-editorial-slide gallery-editorial-bg royal-frame" data-side="right" data-copy="bottom">
       <div class="gallery-slide-inner relative z-20">
         <div class="gallery-media image-frame">
-          <img src="MEDIA/IMAGES/GALLERY/G-4.png" alt="Gallery image 4">
+          <picture>
+            <source media="(max-width: 767px)" srcset="MEDIA/IMAGES/MOBILE/GALLERY/G4-M.png">
+            <img src="MEDIA/IMAGES/DESKTOP/GALLERY/G4-D.png" alt="Gallery image 4">
+          </picture>
         </div>
         <div class="gallery-copy glass-royal">
           <div class="gallery-kicker">Chapter IV</div>
@@ -1187,6 +1244,15 @@
       gsap.to('.hero-landing-bg, .hero-gradient', {
         backgroundPosition: '100% 50%',
         duration: 10,
+        repeat: -1,
+        yoyo: true,
+        ease: 'sine.inOut'
+      });
+
+      // Left to Right (Looping): Moments Captured
+      gsap.to('.moments-landing-bg', {
+        backgroundPosition: '100% 50%',
+        duration: 12,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut'
