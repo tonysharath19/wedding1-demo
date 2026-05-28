@@ -866,13 +866,13 @@
       html.invitation-open,
       body.invitation-open {
         scroll-snap-type: y mandatory;
-        scroll-padding-top: 60px;
+        scroll-padding-top: calc(60px + env(safe-area-inset-top, 0px));
         touch-action: pan-y;
       }
       body.invitation-open #scroll-content > section {
         scroll-snap-align: start;
         scroll-snap-stop: always;
-        scroll-margin-top: 60px;
+        scroll-margin-top: calc(60px + env(safe-area-inset-top, 0px));
       }
     }
     
@@ -892,6 +892,8 @@
     @media (max-width: 767px) {
       body.invitation-open #scroll-content > section {
         padding-top: calc(60px + env(safe-area-inset-top, 0px));
+        height: calc(100svh - 60px) !important;
+        box-sizing: border-box;
       }
     }
   </style>
