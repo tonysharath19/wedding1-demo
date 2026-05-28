@@ -798,7 +798,8 @@
       left: 0;
       right: 0;
       z-index: 9999;
-      padding: 14px 18px 12px;
+      height: 60px;
+      padding: 0 18px;
       display: none;
       pointer-events: none;
       background: linear-gradient(180deg, rgba(10, 5, 15, 0.78) 0%, rgba(10, 5, 15, 0.35) 60%, rgba(10, 5, 15, 0) 100%);
@@ -818,6 +819,7 @@
       text-align: center;
       color: rgba(243, 200, 139, 0.96);
       text-shadow: 0 10px 28px rgba(0,0,0,0.55);
+      line-height: 60px;
     }
     @media (max-width: 767px) {
       .mobile-invite-header { display: block; }
@@ -864,11 +866,13 @@
       html.invitation-open,
       body.invitation-open {
         scroll-snap-type: y mandatory;
-        scroll-padding-top: 56px;
+        scroll-padding-top: 60px;
+        touch-action: pan-x;
       }
       body.invitation-open #scroll-content > section {
         scroll-snap-align: start;
         scroll-snap-stop: always;
+        scroll-margin-top: 60px;
       }
     }
     
@@ -881,6 +885,13 @@
       .moments-landing-bg,
       .section-royal-footer {
         height: 100svh !important;
+      }
+    }
+
+    /* Mobile: keep content below fixed header */
+    @media (max-width: 767px) {
+      body.invitation-open #scroll-content > section {
+        padding-top: calc(60px + env(safe-area-inset-top, 0px));
       }
     }
   </style>
@@ -1307,6 +1318,7 @@
       let isTouching = false;
       let settleTimer = null;
       let allowNativeTouchScroll = false;
+      let moveDefaultPrevented = false;
 
       const isInvitationOpen = () => document.body.classList.contains('invitation-open');
       const shouldAllowNativeScrollTarget = (eventTarget) => {
@@ -1336,8 +1348,13 @@
         const clamped = Math.max(0, Math.min(tops.length - 1, nextIndex));
         const targetY = tops[clamped];
         isPaging = true;
-        lenis.scrollTo(targetY, { immediate: true, lock: true });
-        isPaging = false;
+        try { lenis.stop(); } catch (_) {}
+        lenis.scrollTo(targetY, { immediate: true });
+        // Small delay to allow the browser to apply the scroll before re-enabling.
+        setTimeout(() => {
+          try { lenis.start(); } catch (_) {}
+          isPaging = false;
+        }, 0);
         lastSnapIndex = clamped;
       };
 
@@ -1358,6 +1375,7 @@
           if (!isInvitationOpen()) return;
           if (isPaging) return;
           allowNativeTouchScroll = shouldAllowNativeScrollTarget(e.target);
+          moveDefaultPrevented = false;
           if (allowNativeTouchScroll) return;
           isTouching = true;
           startY = e.touches && e.touches.length ? e.touches[0].clientY : 0;
@@ -1375,6 +1393,7 @@
           if (!isTouching) return;
           // Hard stop browser momentum so a "rash" swipe can't skip sections.
           e.preventDefault();
+          moveDefaultPrevented = true;
         },
         { passive: false }
       );
@@ -1389,6 +1408,10 @@
             return;
           }
           isTouching = false;
+          if (!moveDefaultPrevented) {
+            // If we didn't prevent default, let native scrolling happen (safety fallback).
+            return;
+          }
           const endY = e.changedTouches && e.changedTouches.length ? e.changedTouches[0].clientY : startY;
           const delta = startY - endY; // positive = swipe up
           const viewH = Math.max(1, window.innerHeight);
@@ -1412,6 +1435,10 @@
     
     sealButton.addEventListener('click', () => {
       const preloaderTimeline = gsap.timeline({
+        onStart: () => {
+          document.body.classList.add('invitation-open');
+          document.documentElement.classList.add('invitation-open');
+        },
         onComplete: () => {
           document.getElementById('preloader').style.display = 'none';
           document.body.classList.add('invitation-open');
