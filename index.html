@@ -1241,14 +1241,9 @@
         const clamped = Math.max(0, Math.min(tops.length - 1, nextIndex));
         const targetY = tops[clamped];
         isPaging = true;
-        lenis.scrollTo(targetY, {
-          immediate: true,
-          lock: true,
-          onComplete: () => {
-            isPaging = false;
-            lastSnapIndex = clamped;
-          }
-        });
+        lenis.scrollTo(targetY, { immediate: true, lock: true });
+        isPaging = false;
+        lastSnapIndex = clamped;
       };
 
       const scheduleSettle = () => {
@@ -1272,16 +1267,6 @@
           if (tops.length) lastSnapIndex = nearestIndexFromY(window.scrollY, tops);
         },
         { passive: true }
-      );
-
-      // Block native momentum/glide; we page sections ourselves on touchend.
-      window.addEventListener(
-        'touchmove',
-        (e) => {
-          if (!isTouching) return;
-          e.preventDefault();
-        },
-        { passive: false }
       );
 
       window.addEventListener(
