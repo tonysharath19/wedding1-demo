@@ -1339,7 +1339,6 @@
       let isTouching = false;
       let settleTimer = null;
       let allowNativeTouchScroll = false;
-      let moveDefaultPrevented = false;
 
       const isInvitationOpen = () => document.body.classList.contains('invitation-open');
       const shouldAllowNativeScrollTarget = (eventTarget) => {
@@ -1369,13 +1368,9 @@
         const clamped = Math.max(0, Math.min(tops.length - 1, nextIndex));
         const targetY = tops[clamped];
         isPaging = true;
-        try { lenis.stop(); } catch (_) {}
-        lenis.scrollTo(targetY, { immediate: true });
-        // Small delay to allow the browser to apply the scroll before re-enabling.
-        setTimeout(() => {
-          try { lenis.start(); } catch (_) {}
-          isPaging = false;
-        }, 0);
+        // Use native scroll for maximum browser compatibility on mobile.
+        window.scrollTo({ top: targetY, left: 0, behavior: 'smooth' });
+        setTimeout(() => { isPaging = false; }, 360);
         lastSnapIndex = clamped;
       };
 
@@ -1396,7 +1391,6 @@
           if (!isInvitationOpen()) return;
           if (isPaging) return;
           allowNativeTouchScroll = shouldAllowNativeScrollTarget(e.target);
-          moveDefaultPrevented = false;
           if (allowNativeTouchScroll) return;
           isTouching = true;
           startY = e.touches && e.touches.length ? e.touches[0].clientY : 0;
@@ -1404,19 +1398,6 @@
           if (tops.length) lastSnapIndex = nearestIndexFromY(window.scrollY, tops);
         },
         { passive: true }
-      );
-
-      window.addEventListener(
-        'touchmove',
-        (e) => {
-          if (!isInvitationOpen()) return;
-          if (allowNativeTouchScroll) return;
-          if (!isTouching) return;
-          // Hard stop browser momentum so a "rash" swipe can't skip sections.
-          e.preventDefault();
-          moveDefaultPrevented = true;
-        },
-        { passive: false }
       );
 
       window.addEventListener(
@@ -1429,10 +1410,13 @@
             return;
           }
           isTouching = false;
-          const endY = e.changedTouches && e.changedTouches.length ? e.changedTouches[0].clientY : startY;
+          const endY =
+            e.changedTouches && e.changedTouches.length
+              ? e.changedTouches[0].clientY
+              : (e.touches && e.touches.length ? e.touches[0].clientY : startY);
           const delta = startY - endY; // positive = swipe up
           const viewH = Math.max(1, window.innerHeight);
-          const threshold = Math.max(40, Math.round(viewH * 0.12));
+          const threshold = Math.max(24, Math.round(viewH * 0.08));
           if (Math.abs(delta) < threshold) {
             scheduleSettle();
             return;
