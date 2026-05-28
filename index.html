@@ -1205,8 +1205,8 @@
     }
     requestAnimationFrame(raf);
 
-    // Mobile-only: snap to full sections after a swipe (keeps the same GSAP stacked-panel transitions,
-    // but makes short swipes land cleanly with a "buttery" settle).
+    // Mobile-only: hard "one section per swipe" paging.
+    // Prevents long swipes from skipping multiple pinned panels at once.
     function initMobileSnapScroll() {
       if (!__isMobileScroll()) return;
       if (window.__mobileSnapInit) return;
@@ -1216,59 +1216,92 @@
       const getPanelTops = () =>
         panels().map((panel) => Math.round(panel.getBoundingClientRect().top + window.scrollY));
 
-      let lastY = window.scrollY;
-      let lastDelta = 0;
+      let startY = 0;
+      let lastSnapIndex = 0;
+      let isPaging = false;
+      let isTouching = false;
       let settleTimer = null;
-      let isSnapping = false;
+
+      const nearestIndexFromY = (y, tops) => {
+        let nearestIndex = 0;
+        let nearestDist = Infinity;
+        for (let i = 0; i < tops.length; i++) {
+          const d = Math.abs(tops[i] - y);
+          if (d < nearestDist) {
+            nearestDist = d;
+            nearestIndex = i;
+          }
+        }
+        return nearestIndex;
+      };
+
+      const snapToIndex = (nextIndex) => {
+        const tops = getPanelTops();
+        if (!tops.length) return;
+        const clamped = Math.max(0, Math.min(tops.length - 1, nextIndex));
+        const targetY = tops[clamped];
+        isPaging = true;
+        lenis.scrollTo(targetY, {
+          immediate: true,
+          lock: true,
+          onComplete: () => {
+            isPaging = false;
+            lastSnapIndex = clamped;
+          }
+        });
+      };
 
       const scheduleSettle = () => {
         if (settleTimer) clearTimeout(settleTimer);
         settleTimer = setTimeout(() => {
-          if (isSnapping) return;
+          if (isPaging) return;
           const tops = getPanelTops();
           if (!tops.length) return;
-
-          const y = window.scrollY;
-          const viewH = Math.max(1, window.innerHeight);
-          const bias = Math.max(28, Math.round(viewH * 0.33));
-
-          let nearestIndex = 0;
-          let nearestDist = Infinity;
-          for (let i = 0; i < tops.length; i++) {
-            const d = Math.abs(tops[i] - y);
-            if (d < nearestDist) {
-              nearestDist = d;
-              nearestIndex = i;
-            }
-          }
-
-          let targetIndex = nearestIndex;
-          if (lastDelta > 36 && y > tops[nearestIndex] + bias) targetIndex = Math.min(tops.length - 1, nearestIndex + 1);
-          if (lastDelta < -36 && y < tops[nearestIndex] - bias) targetIndex = Math.max(0, nearestIndex - 1);
-
-          const targetY = tops[targetIndex];
-          if (Math.abs(targetY - y) < 6) return;
-
-          isSnapping = true;
-          lenis.scrollTo(targetY, {
-            duration: 0.35,
-            easing: (t) => t,
-            lock: true,
-            onComplete: () => {
-              isSnapping = false;
-            }
-          });
-        }, 90);
+          lastSnapIndex = nearestIndexFromY(window.scrollY, tops);
+          snapToIndex(lastSnapIndex);
+        }, 80);
       };
 
-      lenis.on('scroll', () => {
-        const y = window.scrollY;
-        lastDelta = y - lastY;
-        lastY = y;
-        scheduleSettle();
-      });
+      window.addEventListener(
+        'touchstart',
+        (e) => {
+          if (isPaging) return;
+          isTouching = true;
+          startY = e.touches && e.touches.length ? e.touches[0].clientY : 0;
+          const tops = getPanelTops();
+          if (tops.length) lastSnapIndex = nearestIndexFromY(window.scrollY, tops);
+        },
+        { passive: true }
+      );
 
-      window.addEventListener('touchend', scheduleSettle, { passive: true });
+      // Block native momentum/glide; we page sections ourselves on touchend.
+      window.addEventListener(
+        'touchmove',
+        (e) => {
+          if (!isTouching) return;
+          e.preventDefault();
+        },
+        { passive: false }
+      );
+
+      window.addEventListener(
+        'touchend',
+        (e) => {
+          if (isPaging) return;
+          isTouching = false;
+          const endY = e.changedTouches && e.changedTouches.length ? e.changedTouches[0].clientY : startY;
+          const delta = startY - endY; // positive = swipe up
+          const viewH = Math.max(1, window.innerHeight);
+          const threshold = Math.max(40, Math.round(viewH * 0.12));
+          if (Math.abs(delta) < threshold) {
+            scheduleSettle();
+            return;
+          }
+          snapToIndex(lastSnapIndex + (delta > 0 ? 1 : -1));
+        },
+        { passive: true }
+      );
+
       window.addEventListener('orientationchange', () => setTimeout(() => ScrollTrigger.refresh(true), 250), {
         passive: true
       });
