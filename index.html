@@ -1272,6 +1272,11 @@
     const __isMobileScroll = () =>
       window.matchMedia('(hover: none) and (pointer: coarse) and (max-width: 767px)').matches;
 
+    const __setInvitationOpen = () => {
+      document.body.classList.add('invitation-open');
+      document.documentElement.classList.add('invitation-open');
+    };
+
     const lenis = new Lenis({
       duration: __isMobileScroll() ? 1.05 : 1.4,
       smoothWheel: true,
@@ -1294,6 +1299,22 @@
     document.documentElement.style.scrollBehavior = 'auto';
     window.scrollTo(0, 0);
     document.body.style.overflow = 'hidden';
+
+    // If the page loads without the preloader (cached / server-rendered / already dismissed),
+    // ensure the fixed mobile header is visible.
+    const __syncInvitationOpenFromPreloader = () => {
+      const preloader = document.getElementById('preloader');
+      if (!preloader) {
+        __setInvitationOpen();
+        return;
+      }
+      const cs = window.getComputedStyle(preloader);
+      if (cs.display === 'none' || cs.visibility === 'hidden' || Number(cs.opacity) === 0) {
+        __setInvitationOpen();
+      }
+    };
+    window.addEventListener('DOMContentLoaded', __syncInvitationOpenFromPreloader, { passive: true });
+    window.addEventListener('pageshow', __syncInvitationOpenFromPreloader, { passive: true });
 
     function raf(time) {
       lenis.raf(time);
@@ -1436,13 +1457,11 @@
     sealButton.addEventListener('click', () => {
       const preloaderTimeline = gsap.timeline({
         onStart: () => {
-          document.body.classList.add('invitation-open');
-          document.documentElement.classList.add('invitation-open');
+          __setInvitationOpen();
         },
         onComplete: () => {
           document.getElementById('preloader').style.display = 'none';
-          document.body.classList.add('invitation-open');
-          document.documentElement.classList.add('invitation-open');
+          __setInvitationOpen();
           document.body.style.overflow = '';
           window.scrollTo(0, 0);
           lenis.scrollTo(0, { immediate: true });
