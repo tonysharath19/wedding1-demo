@@ -413,9 +413,9 @@
       animation: scrollDot 1.4s ease-in-out infinite;
     }
     @keyframes scrollDot {
-      0% { opacity: 0; transform: translate(-50%, -2px); }
+      0% { opacity: 0; transform: translate(-50%, 14px); }
       25% { opacity: 1; }
-      100% { opacity: 0; transform: translate(-50%, 14px); }
+      100% { opacity: 0; transform: translate(-50%, -2px); }
     }
 
     .image-frame {
@@ -867,7 +867,7 @@
       body.invitation-open {
         scroll-snap-type: y mandatory;
         scroll-padding-top: 60px;
-        touch-action: pan-x;
+        touch-action: pan-y;
       }
       body.invitation-open #scroll-content > section {
         scroll-snap-align: start;
@@ -1429,10 +1429,6 @@
             return;
           }
           isTouching = false;
-          if (!moveDefaultPrevented) {
-            // If we didn't prevent default, let native scrolling happen (safety fallback).
-            return;
-          }
           const endY = e.changedTouches && e.changedTouches.length ? e.changedTouches[0].clientY : startY;
           const delta = startY - endY; // positive = swipe up
           const viewH = Math.max(1, window.innerHeight);
