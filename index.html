@@ -1181,10 +1181,10 @@
       smoothWheel: true,
       ...(__isMobileScroll()
         ? {
-            smoothTouch: true,
-            syncTouch: true,
-            touchMultiplier: 1.25,
-            lerp: 0.085
+            smoothTouch: false,
+            syncTouch: false,
+            touchMultiplier: 1,
+            lerp: 0.2
           }
         : {}),
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
@@ -1230,7 +1230,7 @@
 
           const y = window.scrollY;
           const viewH = Math.max(1, window.innerHeight);
-          const bias = Math.max(18, Math.round(viewH * 0.16));
+          const bias = Math.max(28, Math.round(viewH * 0.33));
 
           let nearestIndex = 0;
           let nearestDist = Infinity;
@@ -1243,22 +1243,22 @@
           }
 
           let targetIndex = nearestIndex;
-          if (lastDelta > 2 && y > tops[nearestIndex] + bias) targetIndex = Math.min(tops.length - 1, nearestIndex + 1);
-          if (lastDelta < -2 && y < tops[nearestIndex] - bias) targetIndex = Math.max(0, nearestIndex - 1);
+          if (lastDelta > 36 && y > tops[nearestIndex] + bias) targetIndex = Math.min(tops.length - 1, nearestIndex + 1);
+          if (lastDelta < -36 && y < tops[nearestIndex] - bias) targetIndex = Math.max(0, nearestIndex - 1);
 
           const targetY = tops[targetIndex];
           if (Math.abs(targetY - y) < 6) return;
 
           isSnapping = true;
           lenis.scrollTo(targetY, {
-            duration: 0.9,
-            easing: (t) => 1 - Math.pow(1 - t, 3),
+            duration: 0.35,
+            easing: (t) => t,
             lock: true,
             onComplete: () => {
               isSnapping = false;
             }
           });
-        }, 140);
+        }, 90);
       };
 
       lenis.on('scroll', () => {
